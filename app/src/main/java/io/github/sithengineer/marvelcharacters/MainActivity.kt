@@ -1,23 +1,15 @@
 package io.github.sithengineer.marvelcharacters
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.widget.FrameLayout
-import butterknife.BindView
 import butterknife.ButterKnife
+import io.github.sithengineer.marvelcharacters.characters.CharactersFragment
 
-class HomeActivity : AppCompatActivity() {
-
-  @BindView(R.id.navigation)
-  lateinit var bottomNavigation: BottomNavigationView
-
-  @BindView(R.id.fragment_placeholder)
-  lateinit var fragmentPlaceholder: FrameLayout
+class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_home)
+    setContentView(R.layout.activity_main)
     ButterKnife.bind(this)
 
     supportFragmentManager

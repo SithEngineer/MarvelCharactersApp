@@ -1,6 +1,9 @@
 <resources>
   <string name="app_name">Marvel Chars</string>
-  <string name="menu_home">Home</string>
-  <string name="menu_characters">Characters</string>
-  <string name="fragment_characters_hello_textview">Hello Marvel Characters</string>
+  <string name="fragment_character_details_comics_title">Comics</string>
+  <string name="fragment_character_details_series_title">Series</string>
+  <string name="fragment_character_details_related_links_title">Related links</string>
+  <string name="fragment_character_details_related_links_detail">DETAIL</string>
+  <string name="fragment_character_details_related_links_wiki">WIKI</string>
+  <string name="fragment_character_details_related_comic_link">COMICLINK</string>
 </resources>

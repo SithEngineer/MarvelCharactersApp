@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/list_item_book_max_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_marginEnd="8dp"
+    >
+
+  <ImageView
+      android:id="@+id/list_item_book_image"
+      android:layout_width="@dimen/list_item_book_max_width"
+      android:layout_height="@dimen/list_item_book_image_height"
+      tools:background="#424021"
+      />
+
+  <TextView
+      android:layout_width="@dimen/list_item_book_max_width"
+      android:layout_height="wrap_content"
+      android:textAlignment="center"
+      tools:text="robust synopsis"
+      />
+
+</LinearLayout>
