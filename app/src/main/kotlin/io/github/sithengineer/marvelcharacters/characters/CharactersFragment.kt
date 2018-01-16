@@ -14,6 +14,8 @@ class CharactersFragment : Fragment() {
   @BindView(R.id.fragment_characters_list)
   lateinit var characters: RecyclerView
 
+  private lateinit var presenter: CharactersPresenter
+
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     return inflater!!.inflate(R.layout.fragment_characters, container, false)
@@ -22,6 +24,11 @@ class CharactersFragment : Fragment() {
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     // to do
+  }
+
+  override fun onResume() {
+    super.onResume()
+    presenter.start()
   }
 
   companion object {
