@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'de.mannodermaus.android-junit5'
 
+def marvelAppPropertiesFile = rootProject.file("marvelApp.properties")
+def marvelAppProperties = new Properties()
+marvelAppProperties.load(new FileInputStream(marvelAppPropertiesFile))
+
 android {
   compileSdkVersion 26
   defaultConfig {
@@ -14,14 +18,29 @@ android {
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
+  /*
+  signingConfigs {
+    config {
+      keyAlias marvelAppProperties['keyStoreAlias']
+      keyPassword marvelAppProperties['keyStorePassword']
+      storeFile file(marvelAppProperties['storeStoreFile'])
+      storePassword marvelAppProperties['storeStorePassword']
+    }
+  }
+  */
   buildTypes {
     debug {
-      buildConfigField "String", "MARVEL_API_URL", '"https://gateway.marvel.com:443"'
-      minifyEnabled false
+      buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelDebugApiUrl']
+      buildConfigField "String", "MARVEL_API_KEY", marvelAppProperties['marvelDebugApiKey']
+      buildConfigField "String", "CACHE_SIZE", marvelAppProperties['debugCacheSize']
+      minifyEnabled true
+      useProguard false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     release {
-      buildConfigField "String", "MARVEL_API_URL", '"https://gateway.marvel.com:443"'
+      buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelReleaseApiUrl']
+      buildConfigField "String", "MARVEL_API_KEY", marvelAppProperties['marvelReleaseApiKey']
+      buildConfigField "String", "CACHE_SIZE", marvelAppProperties['releaseCacheSize']
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }

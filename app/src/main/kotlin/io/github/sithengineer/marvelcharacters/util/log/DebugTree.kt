@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.log
+package io.github.sithengineer.marvelcharacters.util.log
 
 import timber.log.Timber
 

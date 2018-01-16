@@ -7,9 +7,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
+import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
+import io.github.sithengineer.marvelcharacters.characters.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.data.model.Character
+import io.reactivex.Flowable
 
-class CharactersFragment : Fragment() {
+class CharactersFragment : Fragment(), CharactersContract.View {
+  override fun setPresenter(presenter: CharactersContract.Presenter) {
+    TODO("not implemented")
+  }
+
+  override fun showLoading() {
+    TODO("not implemented")
+  }
+
+  override fun hideLoading() {
+    TODO("not implemented")
+  }
+
+  override fun showCharacters(characters: List<Character>) {
+    TODO("not implemented")
+  }
+
+  override fun characterSelected(): Flowable<Character> {
+    TODO("not implemented")
+  }
+
+  override fun showCharacterDetails(characterId: Int) {
+    TODO("not implemented")
+  }
 
   @BindView(R.id.fragment_characters_list)
   lateinit var characters: RecyclerView
@@ -23,7 +51,13 @@ class CharactersFragment : Fragment() {
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    // to do
+    presenter = getPresenter()
+  }
+
+  private fun getPresenter(): CharactersPresenter {
+    val charRepo = (activity.application as MarvelCharactersApplication).charactersRepository
+    val getCharactersUseCase = GetCharacters(charRepo, EmptyFilter())
+    return CharactersPresenter(this, getCharactersUseCase)
   }
 
   override fun onResume() {
