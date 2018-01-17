@@ -24,4 +24,8 @@ class CharactersRepository (
   override fun getCharacters(offset: Int, limit: Int): Single<CharacterDataWrapper> {
     return remoteDataSource.getCharacters(offset, limit)
   }
+
+  override fun getCharacters(nameStartsWith: String): Single<CharacterDataWrapper> {
+    return remoteDataSource.getCharacters(nameStartsWith)
+  }
 }

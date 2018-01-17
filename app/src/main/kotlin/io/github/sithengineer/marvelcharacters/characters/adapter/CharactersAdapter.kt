@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.characters
+package io.github.sithengineer.marvelcharacters.characters.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -41,8 +41,10 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent?.context).inflate(ViewHolder.LAYOUT_ID, parent, false)
-    return ViewHolder(view, characterSelectedPublisher)
+    val view = LayoutInflater.from(parent?.context).inflate(
+        ViewHolder.LAYOUT_ID, parent, false)
+    return ViewHolder(
+        view, characterSelectedPublisher)
   }
 
   fun reachedBottomWithOffset(): Observable<Int> = bottomPublisher

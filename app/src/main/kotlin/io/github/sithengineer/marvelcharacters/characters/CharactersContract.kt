@@ -14,6 +14,9 @@ interface CharactersContract {
     fun characterSelected(): Observable<Character>
     fun showCharacterDetails(characterId: Int)
     fun scrolledToBottomWithOffset(): Observable<Int>
+    fun searchedItemPressedWithId(): Observable<Int>
+    fun searchedForTerm(): Observable<String>
+    fun showSearchResult(characters: List<Character>)
   }
 
   interface Presenter : BasePresenter

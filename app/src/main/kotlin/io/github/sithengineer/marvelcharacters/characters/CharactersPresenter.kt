@@ -1,13 +1,15 @@
 package io.github.sithengineer.marvelcharacters.characters
 
 import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.characters.usecase.SearchCharacters
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
 class CharactersPresenter(
     private val view: CharactersContract.View,
-    private val charactersUseCase: GetCharacters,
+    private val getCharactersUseCase: GetCharacters,
+    private val searchCharactersUseCase: SearchCharacters,
     private val ioScheduler: Scheduler,
     private val viewScheduler: Scheduler) : CharactersContract.Presenter {
 
@@ -29,6 +31,8 @@ class CharactersPresenter(
     loadCharacters(isFirstBatch = true)
     handleCharacterSelected()
     handleCharactersListReachedBottom()
+    handleSearchTerms()
+    handleSearchItemPressed()
   }
 
   override fun stop() {
@@ -58,6 +62,36 @@ class CharactersPresenter(
     )
   }
 
+  private fun handleSearchItemPressed() {
+    compositeSubscription.add(
+        view.searchedItemPressedWithId()
+            .subscribeOn(viewScheduler)
+            .subscribe({ characterId ->
+              view.showCharacterDetails(characterId)
+            }, { err ->
+              Timber.e(err)
+            })
+    )
+  }
+
+  private fun handleSearchTerms() {
+    compositeSubscription.add(
+        view.searchedForTerm()
+            .doOnNext { query -> Timber.d("searching for: $query") }
+            .flatMap { query ->
+              val request = SearchCharacters.Request(query)
+              searchCharactersUseCase.execute(request).characters.subscribeOn(
+                  ioScheduler).toObservable()
+            }
+            .observeOn(viewScheduler)
+            .subscribe({ characters ->
+              view.showSearchResult(characters)
+            }, { err ->
+              Timber.e(err)
+            })
+    )
+  }
+
   private fun loadCharacters(isFirstBatch: Boolean = false) {
     Timber.d("loading characters")
     if (isFirstBatch) {
@@ -66,7 +100,7 @@ class CharactersPresenter(
       view.showSmallBottomLoading()
     }
     val request = GetCharacters.Request(charactersOffset, CHARACTERS_FETCH_LIMIT)
-    val response = charactersUseCase.execute(request)
+    val response = getCharactersUseCase.execute(request)
     compositeSubscription.add(
         response.characters
             .subscribeOn(ioScheduler)
