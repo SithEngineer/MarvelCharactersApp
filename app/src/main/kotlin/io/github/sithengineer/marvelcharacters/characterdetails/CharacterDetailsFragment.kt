@@ -44,21 +44,26 @@ class CharacterDetailsFragment : Fragment() {
   @BindView(R.id.fragment_character_details_related_links_comic_link)
   lateinit var relatedLinksComicLink: TextView
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     return inflater!!.inflate(
         R.layout.fragment_character_details, container, false)
   }
 
-  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    // to do
+    // val characterId = arguments.getInt(CHARACTER_ID)
+    // TODO
   }
 
   companion object {
-    fun newInstance(): CharactersFragment {
+
+    private val CHARACTER_ID = "characterId"
+
+    fun newInstance(characterId: Int): CharactersFragment {
       val fragment = CharactersFragment()
       val args = Bundle()
+      args.putInt(CHARACTER_ID, characterId)
       fragment.arguments = args
       return fragment
     }

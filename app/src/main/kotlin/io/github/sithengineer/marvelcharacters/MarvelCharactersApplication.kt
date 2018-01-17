@@ -16,8 +16,7 @@ class MarvelCharactersApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     if (BuildConfig.DEBUG) {
-      Stetho.initializeWithDefaults(applicationContext)
-      Timber.plant(StethoTree())
+      initializeStetho(applicationContext)
     } else {
       Timber.plant(CrashReportTree())
     }
@@ -25,10 +24,22 @@ class MarvelCharactersApplication : Application() {
     createCharactersRepository(this)
   }
 
+  private fun initializeStetho(context: Context) {
+    val initializer = Stetho.newInitializerBuilder(context)
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
+        .enableDumpapp(Stetho.defaultDumperPluginsProvider(context))
+        .build()
+
+    Stetho.initialize(initializer)
+
+    Timber.plant(StethoTree())
+  }
+
   private fun createCharactersRepository(context: Context) {
     val marvelApi = MarvelServiceFactory.makeMarvelCharactersApi(BuildConfig.DEBUG,
         context.cacheDir, BuildConfig.CACHE_SIZE, NetworkStatus())
-    val charactersRemoteDataSource = CharactersRemoteDataSource(marvelApi, BuildConfig.MARVEL_API_KEY)
+    val charactersRemoteDataSource = CharactersRemoteDataSource(marvelApi,
+        BuildConfig.MARVEL_API_PUBLIC_KEY, BuildConfig.MARVEL_API_PRIVATE_KEY)
     charactersRepository = CharactersRepository(charactersRemoteDataSource)
   }
 

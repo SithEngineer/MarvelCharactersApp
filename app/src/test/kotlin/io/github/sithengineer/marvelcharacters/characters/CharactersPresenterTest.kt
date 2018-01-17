@@ -8,12 +8,15 @@ import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.reactivex.BackpressureStrategy
 import io.reactivex.rxkotlin.toSingle
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.api.dsl.xit
+import java.time.Instant
+import java.util.*
 
 class CharactersPresenterTest : Spek({
   given("a presenter for the list of characters view") {
@@ -25,13 +28,14 @@ class CharactersPresenterTest : Spek({
     }
 
     val charactersRemoteDataSource = mock<CharactersDataSource> {
-      on { getCharacters(any()) } doReturn giveCharactersWrapper().toSingle()
+      on { getCharacters(any(), any()) } doReturn giveCharactersWrapper().toSingle()
     }
     //val charactersRepository = CharactersRepository.getInstance(charactersRemoteDataSource)
     val charactersRepository = CharactersRepository(charactersRemoteDataSource)
 
     val getCharactersUseCase = GetCharacters(charactersRepository, EmptyFilter())
-    val charactersPresenter = CharactersPresenter(view, getCharactersUseCase)
+    val charactersPresenter = CharactersPresenter(view, getCharactersUseCase,
+        Schedulers.trampoline(), Schedulers.trampoline())
 
     on("characters view created") {
       it("should have the presenter set") {
@@ -42,18 +46,18 @@ class CharactersPresenterTest : Spek({
     on("presenter started") {
       charactersPresenter.start()
       it("should load first batch of characters") {
-        verify(charactersRemoteDataSource, times(1)).getCharacters(0)
+        verify(charactersRemoteDataSource, times(1)).getCharacters(0, 10)
       }
 
       it("should set first list of characters in the view") {
-        verify(view, times(1)).showLoading()
+        verify(view, times(1)).showBigCenteredLoading()
         verify(view, times(1)).showCharacters(givenCharacters())
         verify(view, times(1)).hideLoading()
       }
     }
 
-    on("scrolled to bottom"){
-      xit("should attempt to load more characters"){
+    on("scrolled to bottom") {
+      xit("should attempt to load more characters") {
         // TODO
       }
     }
@@ -81,13 +85,15 @@ private fun givenCharacters(): MutableList<Character> {
   return characters
 }
 
-private fun getCharacter(i: Int) : Character {
+private fun getCharacter(i: Int): Character {
   val emptyMarvelListComicSummary = MarvelList<ComicSummary>(0, 0, "", emptyList())
   val emptyMarvelListStorySummary = MarvelList<StorySummary>(0, 0, "", emptyList())
   val emptyMarvelListEventSummary = MarvelList<EventSummary>(0, 0, "", emptyList())
   val emptyMarvelListSeriesSummary = MarvelList<SeriesSummary>(0, 0, "", emptyList())
 
-  return  Character(i, "name $i", "description $i", "never", "",
-      emptyList(), Image("", ""), emptyMarvelListComicSummary,
-      emptyMarvelListStorySummary, emptyMarvelListEventSummary, emptyMarvelListSeriesSummary)
+  return Character(i, name = "name $i", description = "description $i", modified = Date.from(
+      Instant.EPOCH), thumbnail = Image("", ""), resourceURI = "",
+      comics = emptyMarvelListComicSummary, urls = emptyList(),
+      stories = emptyMarvelListStorySummary, events = emptyMarvelListEventSummary,
+      series = emptyMarvelListSeriesSummary)
 }

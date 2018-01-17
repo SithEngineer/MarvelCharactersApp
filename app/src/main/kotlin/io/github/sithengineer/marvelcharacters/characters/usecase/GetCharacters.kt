@@ -11,11 +11,11 @@ class GetCharacters(
     private val filter: CharacterFilter) : UseCase<GetCharacters.Request, GetCharacters.Response> {
 
   override fun execute(request: Request): Response {
-    val rxResponse = charactersRepository.getCharacters(request.offset)
-    return Response( rxResponse.map { it -> filter.filter(it.data.results) } )
+    val rxResponse = charactersRepository.getCharacters(request.offset, request.limit)
+    return Response(rxResponse.map { it -> it.data?.results?.let { filter.filter(it) } })
   }
 
-  class Request(val offset: Int) : UseCase.RequestValues
+  class Request(val offset: Int, val limit: Int) : UseCase.RequestValues
 
   class Response(val characters: Single<List<Character>>) : UseCase.ResponseValue
 }

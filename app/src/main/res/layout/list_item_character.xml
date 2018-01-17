@@ -6,18 +6,23 @@
     >
 
   <ImageView
+      android:id="@+id/list_item_character_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:scaleType="centerCrop"
       tools:background="@color/colorPrimaryDark"
       />
 
   <TextView
+      android:id="@+id/list_item_character_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:layout_marginBottom="@dimen/list_item_character_inner_padding"
-      android:layout_marginEnd="@dimen/list_item_character_inner_padding"
-      android:layout_marginStart="@dimen/list_item_character_inner_padding"
+      android:paddingTop="@dimen/list_item_character_inner_padding"
+      android:paddingBottom="@dimen/list_item_character_inner_padding"
+      android:paddingEnd="@dimen/list_item_character_inner_padding"
+      android:paddingStart="@dimen/list_item_character_inner_padding"
+      android:background="@color/shade"
       android:maxLines="1"
       tools:text="Ms. Marvel (Kamala Khan)"
       style="@style/CharacterName"

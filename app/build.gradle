@@ -4,43 +4,48 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'de.mannodermaus.android-junit5'
 
-def marvelAppPropertiesFile = rootProject.file("marvelApp.properties")
+def marvelAppPropertiesFile = rootProject.file("../configurations/marvelApp.properties")
 def marvelAppProperties = new Properties()
 marvelAppProperties.load(new FileInputStream(marvelAppPropertiesFile))
 
 android {
-  compileSdkVersion 26
+  compileSdkVersion 27
   defaultConfig {
     applicationId "io.github.sithengineer.marvelcharacters"
     minSdkVersion 19
-    targetSdkVersion 26
+    targetSdkVersion 27
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
+
   /*
   signingConfigs {
     config {
       keyAlias marvelAppProperties['keyStoreAlias']
       keyPassword marvelAppProperties['keyStorePassword']
-      storeFile file(marvelAppProperties['storeStoreFile'])
-      storePassword marvelAppProperties['storeStorePassword']
+      storeFile file(marvelAppProperties['keyStoreFile'])
+      storePassword marvelAppProperties['keyStorePassword']
     }
   }
   */
+
+  // create common constants for all build types
+  buildTypes.each {
+    it.buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelApiUrl']
+    it.buildConfigField "String", "MARVEL_API_PUBLIC_KEY", marvelAppProperties['marvelApiPublicKey']
+    it.buildConfigField "String", "MARVEL_API_PRIVATE_KEY", marvelAppProperties['marvelApiPrivateKey']
+  }
+
   buildTypes {
     debug {
-      buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelDebugApiUrl']
-      buildConfigField "String", "MARVEL_API_KEY", marvelAppProperties['marvelDebugApiKey']
-      buildConfigField "String", "CACHE_SIZE", marvelAppProperties['debugCacheSize']
-      minifyEnabled true
+      buildConfigField "long", "CACHE_SIZE", marvelAppProperties['debugCacheSize']
+      minifyEnabled false
       useProguard false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     release {
-      buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelReleaseApiUrl']
-      buildConfigField "String", "MARVEL_API_KEY", marvelAppProperties['marvelReleaseApiKey']
-      buildConfigField "String", "CACHE_SIZE", marvelAppProperties['releaseCacheSize']
+      buildConfigField "long", "CACHE_SIZE", marvelAppProperties['releaseCacheSize']
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
@@ -56,10 +61,10 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   // Google android depedencies
-  implementation 'com.android.support:appcompat-v7:26.1.0'
-  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-  implementation 'com.android.support:design:26.1.0'
-  implementation 'com.android.support:support-v4:26.1.0'
+  implementation 'com.android.support:appcompat-v7:27.0.2'
+  implementation 'com.android.support:design:27.0.2'
+  implementation 'com.android.support:support-v4:27.0.2'
+  //implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
   // For tests that need a device
   androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -81,6 +86,7 @@ dependencies {
   // logs
   implementation 'com.facebook.stetho:stetho:1.5.0'
   // debug
+  // open Google Chrome, go to chrome://inspect/ and press inspect
   implementation 'com.jakewharton.timber:timber:4.5.1'
   implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
   implementation 'com.facebook.stetho:stetho-timber:1.5.0'
@@ -89,23 +95,27 @@ dependencies {
   implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
   implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
   implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
+  implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
+  implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.0.0'
+  implementation 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0'
   // serialization (1/2)
   implementation 'nz.bradcampbell:paperparcel:2.0.4'
   implementation 'nz.bradcampbell:paperparcel-kotlin:2.0.4' // Optional
   kapt 'nz.bradcampbell:paperparcel-compiler:2.0.4'
   // serialization (2/2)
-  implementation 'com.squareup.moshi:moshi:1.5.0'
-  implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
+  implementation 'com.google.code.gson:gson:2.8.2'
   // networking (1/2)
   implementation 'com.squareup.okhttp3:okhttp:3.8.0'
   implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
   // networking (2/2)
   implementation 'com.squareup.retrofit2:retrofit:2.3.0'
   implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
   // image loading
-  implementation 'com.github.bumptech.glide:glide:4.2.0'
-  kapt 'com.github.bumptech.glide:compiler:4.2.0'
+  implementation ('com.github.bumptech.glide:glide:4.5.0') {
+    exclude group: "com.android.support"
+  }
+  kapt 'com.github.bumptech.glide:compiler:4.5.0'
   implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0@aar'
   // view injection
   implementation 'com.jakewharton:butterknife:8.5.1'

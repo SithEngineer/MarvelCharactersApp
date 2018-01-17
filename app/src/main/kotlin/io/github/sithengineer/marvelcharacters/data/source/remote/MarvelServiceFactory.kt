@@ -1,22 +1,26 @@
 package io.github.sithengineer.marvelcharacters.data.source.remote
 
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.github.sithengineer.marvelcharacters.BuildConfig
 import io.github.sithengineer.marvelcharacters.util.NetworkStatus
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+
 
 object MarvelServiceFactory {
 
   fun makeMarvelCharactersApi(isDebug: Boolean = BuildConfig.DEBUG, cacheDirectory: File,
       cacheSize: Long, networkStatus: NetworkStatus): MarvelCharactersApi {
     val okHttpClient = makeOkHttp(makeLoggingInterceptor(isDebug),
-        makeForceCacheInterceptor(networkStatus), cacheDirectory, cacheSize)
-    return makeRetrofit(okHttpClient, makeMoshi()).create(MarvelCharactersApi::class.java)
+        makeForceCacheInterceptor(networkStatus), cacheDirectory, cacheSize, isDebug)
+    return makeRetrofit(okHttpClient, makeGson()).create(MarvelCharactersApi::class.java)
   }
 
   private fun makeForceCacheInterceptor(networkStatus: NetworkStatus): Interceptor {
@@ -34,7 +38,7 @@ object MarvelServiceFactory {
   private fun makeLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
     val logging = HttpLoggingInterceptor()
     logging.level = if (isDebug)
-      HttpLoggingInterceptor.Level.BODY
+      HttpLoggingInterceptor.Level.HEADERS
     else
       HttpLoggingInterceptor.Level.NONE
     return logging
@@ -42,23 +46,30 @@ object MarvelServiceFactory {
 
   private fun makeOkHttp(httpLoggingInterceptor: Interceptor, forceCacheInterceptor: Interceptor,
       cacheDirectory: File,
-      cacheSize: Long): OkHttpClient {
-    return OkHttpClient.Builder()
+      cacheSize: Long, isDebug: Boolean): OkHttpClient {
+    val clientBuilder = OkHttpClient.Builder()
         .cache(Cache(cacheDirectory, cacheSize))
         .addInterceptor(httpLoggingInterceptor)
         .addInterceptor(forceCacheInterceptor)
-        .build()
+
+    if (isDebug) {
+      clientBuilder.addNetworkInterceptor(StethoInterceptor())
+    }
+
+    return clientBuilder.build()
   }
 
-  private fun makeMoshi(): Moshi {
-    return Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+  private fun makeGson(): Gson {
+    return GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+        .create()
   }
 
-  private fun makeRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
+  private fun makeRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
     return Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
         .baseUrl(BuildConfig.MARVEL_API_URL)
         .build()

@@ -5,7 +5,7 @@
   <dimen name="list_item_book_image_height">180dp</dimen>
   <dimen name="fragment_character_details_inner_padding">12dp</dimen>
   <dimen name="title_text_size">16sp</dimen>
-  <dimen name="character_name_text_size">22sp</dimen>
+  <dimen name="character_name_text_size">18sp</dimen>
   <dimen name="list_item_character_max_height">160dp</dimen>
-  <dimen name="list_item_character_inner_padding">14dp</dimen>
+  <dimen name="list_item_character_inner_padding">10dp</dimen>
 </resources>
