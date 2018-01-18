@@ -25,21 +25,21 @@ class CharactersPresenter(
     view.setPresenter(this)
   }
 
+  override fun stop() {
+    if (!compositeSubscription.isDisposed) {
+      compositeSubscription.dispose()
+    }
+    Timber.d("${this.javaClass.name}::stopped()")
+  }
+
   override fun start() {
-    Timber.d("presenter started")
+    Timber.d("${this.javaClass.name}::started()")
     compositeSubscription = CompositeDisposable()
     loadCharacters(isFirstBatch = true)
     handleCharacterSelected()
     handleCharactersListReachedBottom()
     handleSearchTerms()
     handleSearchItemPressed()
-  }
-
-  override fun stop() {
-    if (!compositeSubscription.isDisposed) {
-      compositeSubscription.dispose()
-    }
-    Timber.d("presenter stopped")
   }
 
 

@@ -19,8 +19,8 @@ import io.reactivex.subjects.PublishSubject
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
   private var charactersShowing: Set<Character> = hashSetOf()
-  private val bottomPublisher: PublishSubject<Int> = PublishSubject.create()
   private val characterSelectedPublisher: PublishSubject<Character> = PublishSubject.create()
+  private val bottomPublisher: PublishSubject<Int> = PublishSubject.create()
 
   private companion object {
     val BOTTOM_OFFSET = 1

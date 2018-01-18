@@ -11,14 +11,19 @@
       android:id="@+id/list_item_book_image"
       android:layout_width="@dimen/list_item_book_max_width"
       android:layout_height="@dimen/list_item_book_image_height"
+      android:scaleType="centerCrop"
       tools:background="#424021"
       />
 
   <TextView
+      android:id="@+id/list_item_book_text"
       android:layout_width="@dimen/list_item_book_max_width"
       android:layout_height="wrap_content"
       android:textAlignment="center"
-      tools:text="robust synopsis"
+      android:maxLines="2"
+      android:ellipsize="marquee"
+      tools:text="robust synopsis with two or more lines"
+      tools:background="@color/colorPrimaryDark"
       />
 
 </LinearLayout>

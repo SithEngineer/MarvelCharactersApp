@@ -1,7 +1,7 @@
 package io.github.sithengineer.marvelcharacters.characters
 
 import com.nhaarman.mockito_kotlin.*
-import io.github.sithengineer.marvelcharacters.characters.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.characters.usecase.filter.EmptyFilter
 import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
@@ -71,10 +71,10 @@ class CharactersPresenterTest : Spek({
   }
 })
 
-private fun giveCharactersWrapper(): CharacterDataWrapper {
+private fun giveCharactersWrapper(): DataWrapper {
   val characters: MutableList<Character> = givenCharacters()
-  val dataContainer = CharacterDataContainer(0, 0, 0, 0, characters)
-  return CharacterDataWrapper(200, "OK", "", "", "", "", dataContainer)
+  val dataContainer = DataContainer(0, 0, 0, 0, characters)
+  return DataWrapper(200, "OK", "", "", "", "", dataContainer)
 }
 
 private fun givenCharacters(): MutableList<Character> {

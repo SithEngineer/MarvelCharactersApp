@@ -24,9 +24,13 @@ class CharacterSearchCursorAdapter(context: Context) : CursorAdapter(context, nu
   }
 
   private var characters: List<SearchCharacter> = emptyList()
-  fun setCharactes(characters: List<SearchCharacter>) {
+  fun setCharacters(characters: List<SearchCharacter>) {
     this.characters = characters
-    swapCursor(getCursorFor(characters))
+    if (characters.isEmpty()) {
+      changeCursor(null)
+    } else {
+      changeCursor(getCursorFor(characters))
+    }
   }
 
   private fun getCursorFor(characters: List<SearchCharacter>): Cursor {

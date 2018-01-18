@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,139 +7,245 @@
     android:orientation="vertical"
     tools:context="io.github.sithengineer.marvelcharacters.characterdetails.CharacterDetailsFragment"
     >
-
-  <!--
-   Main character description section
-  -->
-
-  <ImageView
-      android:id="@+id/fragment_character_details_header_image"
-      android:layout_width="match_parent"
-      android:layout_height="200dp"
-      />
-
-  <TextView
-      android:id="@+id/fragment_character_details_name"
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      tools:text="Hulk"
-      style="@style/CharacterName"
-      />
+      android:background="@drawable/background"
+      android:orientation="vertical"
+      >
 
-  <TextView
-      android:id="@+id/fragment_character_details_description_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      tools:text="Description"
-      style="@style/Title"
-      />
+    <ProgressBar
+        android:id="@+id/fragment_character_details_progress"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        />
 
-  <TextView
-      android:id="@+id/fragment_character_details_description_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      tools:text="Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring."
-      />
+    <!--
+     Main character description section
+    -->
 
-  <!--
-   Comics section
-  -->
-  <TextView
-      android:id="@+id/fragment_character_details_comics_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_comics_title"
-      style="@style/Title"
-      />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        >
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/fragment_character_details_comics_carousel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-      tools:listitem="@layout/list_item_book"
-      />
+      <ImageView
+          android:id="@+id/fragment_character_details_header_image"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"
+          />
 
-  <!--
-   Series section
-  -->
-  <TextView
-      android:id="@+id/fragment_character_details_series_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_series_title"
-      style="@style/Title"
-      />
+      <TextView
+          android:id="@+id/fragment_character_details_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_marginBottom="40dp"
+          android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+          android:paddingStart="@dimen/fragment_character_details_inner_padding"
+          android:textSize="24sp"
+          tools:text="Hulk"
+          style="@style/CharacterName"
+          />
+    </RelativeLayout>
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/fragment_character_details_series_carousel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-      tools:listitem="@layout/list_item_book"
-      />
+    <TextView
+        android:id="@+id/fragment_character_details_description_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_description_title"
+        style="@style/Title"
+        />
 
-  <!--
-   Stories section
-  -->
+    <TextView
+        android:id="@+id/fragment_character_details_description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        tools:text="Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring."
+        />
 
-  <!--
-   Events section
-  -->
+    <!--
+     Comics section
+    -->
+    <TextView
+        android:id="@+id/fragment_character_details_comics_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_comics_title"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="@style/Title"
+        />
 
-  <!--
-   Related links section
-  -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_character_details_comics_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_comic_book"
+        tools:visibility="visible"
+        />
 
-  <TextView
-      android:id="@+id/fragment_character_details_related_links_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_related_links_title"
-      style="@style/Title"
-      />
+    <!--
+     Series section
+    -->
+    <TextView
+        android:id="@+id/fragment_character_details_series_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_series_title"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="@style/Title"
+        />
 
-  <TextView
-      android:id="@+id/fragment_character_details_related_links_detail"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_related_links_detail"
-      />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_character_details_series_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_comic_book"
+        tools:visibility="visible"
+        />
 
-  <TextView
-      android:id="@+id/fragment_character_details_related_links_wiki"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_related_links_wiki"
-      />
+    <!--
+     Stories section
+    -->
+    <TextView
+        android:id="@+id/fragment_character_details_stories_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_stories_title"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="@style/Title"
+        />
 
-  <TextView
-      android:id="@+id/fragment_character_details_related_links_comic_link"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-      android:paddingStart="@dimen/fragment_character_details_inner_padding"
-      android:text="@string/fragment_character_details_related_comic_link"
-      />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_character_details_stories_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_comic_book"
+        tools:visibility="visible"
+        />
 
-</LinearLayout>
+    <!--
+     Events section
+    -->
+    <TextView
+        android:id="@+id/fragment_character_details_events_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_events_title"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="@style/Title"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_character_details_events_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_comic_book"
+        tools:visibility="visible"
+        />
+
+    <!--
+     Related links section
+    -->
+
+    <TextView
+        android:id="@+id/fragment_character_details_related_links_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_related_links_title"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="@style/Title"
+        />
+
+    <TextView
+        android:id="@+id/fragment_character_details_related_links_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_related_links_detail"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/fragment_character_details_related_links_wiki"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_related_links_wiki"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/fragment_character_details_related_links_comic_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
+        android:paddingStart="@dimen/fragment_character_details_inner_padding"
+        android:text="@string/fragment_character_details_related_comic_link"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+  </LinearLayout>
+</ScrollView>

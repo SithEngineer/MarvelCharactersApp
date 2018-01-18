@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.characters.filter
+package io.github.sithengineer.marvelcharacters.characters.usecase.filter
 
 import io.github.sithengineer.marvelcharacters.data.model.Character
 import timber.log.Timber

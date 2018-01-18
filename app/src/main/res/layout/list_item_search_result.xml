@@ -1,31 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:orientation="horizontal"
-    android:weightSum="5"
     >
 
   <ImageView
       android:id="@+id/list_item_search_result_character_image"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
+      android:layout_width="80dp"
+      android:layout_height="80dp"
+      android:scaleType="centerCrop"
       tools:src="@color/colorAccent"
       />
 
   <TextView
       android:id="@+id/list_item_search_result_character_name"
-      android:layout_width="0dp"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_weight="4"
       android:gravity="start"
       android:textColor="@color/white"
       android:textSize="22sp"
-      android:paddingStart="10dp"
-      android:paddingEnd="10dp"
+      android:paddingStart="20dp"
+      android:paddingEnd="4dp"
       android:maxLines="1"
       android:ellipsize="end"
       tools:text="The Hulk and his friends Avengers"

@@ -1,6 +1,6 @@
 package io.github.sithengineer.marvelcharacters.data.source.remote
 
-import io.github.sithengineer.marvelcharacters.data.model.CharacterDataWrapper
+import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.github.sithengineer.marvelcharacters.util.HashUtils
 import io.reactivex.Single
@@ -16,15 +16,44 @@ class CharactersRemoteDataSource(private val api: MarvelCharactersApi,
 
   private fun getTimestamp(): String = System.currentTimeMillis().toString(10)
 
-  override fun getCharacters(offset: Int, limit: Int): Single<CharacterDataWrapper> {
-    val timestamp = getTimestamp()
-    val keyHash = HashUtils.md5("$timestamp$privateApiKey$publicApiKey")
+  override fun getCharacters(offset: Int, limit: Int): Single<DataWrapper<Character>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
     return api.getCharacters(offset, limit, publicApiKey, timestamp, keyHash)
   }
 
-  override fun getCharacters(nameStartsWith: String): Single<CharacterDataWrapper> {
+  override fun getCharacters(nameStartsWith: String): Single<DataWrapper<Character>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacters(nameStartsWith, publicApiKey, timestamp, keyHash)
+  }
+
+  override fun getCharacter(characterId: Int): Single<DataWrapper<Character>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacter(characterId, publicApiKey, timestamp, keyHash)
+  }
+
+  override fun getCharacterComics(characterId: Int): Single<DataWrapper<Comic>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacterComics(characterId, publicApiKey, timestamp, keyHash)
+  }
+
+  override fun getCharacterEvents(characterId: Int): Single<DataWrapper<Event>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacterEvents(characterId, publicApiKey, timestamp, keyHash)
+  }
+
+  override fun getCharacterSeries(characterId: Int): Single<DataWrapper<Series>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacterSeries(characterId, publicApiKey, timestamp, keyHash)
+  }
+
+  override fun getCharacterStories(characterId: Int): Single<DataWrapper<Story>> {
+    val (timestamp, keyHash) = getTimestampKeyHashPair()
+    return api.getCharacterStories(characterId, publicApiKey, timestamp, keyHash)
+  }
+
+  private fun getTimestampKeyHashPair(): Pair<String, String> {
     val timestamp = getTimestamp()
     val keyHash = HashUtils.md5("$timestamp$privateApiKey$publicApiKey")
-    return api.getCharacters(nameStartsWith, publicApiKey, timestamp, keyHash)
+    return Pair(timestamp, keyHash)
   }
 }

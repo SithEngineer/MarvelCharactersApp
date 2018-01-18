@@ -8,4 +8,5 @@
   <dimen name="character_name_text_size">18sp</dimen>
   <dimen name="list_item_character_max_height">160dp</dimen>
   <dimen name="list_item_character_inner_padding">10dp</dimen>
+  <dimen name="fragment_character_details_section_margin">30dp</dimen>
 </resources>

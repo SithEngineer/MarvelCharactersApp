@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.*
+import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -16,10 +17,10 @@ import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
 import io.github.sithengineer.marvelcharacters.characters.adapter.CharacterSearchCursorAdapter
 import io.github.sithengineer.marvelcharacters.characters.adapter.CharactersAdapter
-import io.github.sithengineer.marvelcharacters.characters.filter.EmptyFilter
-import io.github.sithengineer.marvelcharacters.characters.filter.LimitFilter
 import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.characters.usecase.SearchCharacters
+import io.github.sithengineer.marvelcharacters.characters.usecase.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.characters.usecase.filter.LimitFilter
 import io.github.sithengineer.marvelcharacters.data.model.Character
 import io.github.sithengineer.marvelcharacters.data.model.Image
 import io.reactivex.Observable
@@ -91,10 +92,10 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   }
 
   private fun attachPresenter() {
-    // fetch and build dependencies
-    val charRepo = (activity?.application as MarvelCharactersApplication).charactersRepository
-    val getCharactersUseCase = GetCharacters(charRepo, EmptyFilter())
-    val searchCharactersUseCase = SearchCharacters(charRepo, LimitFilter(SEARCH_RESULT_LIMIT))
+    val charactersRepository = (activity?.application as MarvelCharactersApplication).charactersRepository
+    val getCharactersUseCase = GetCharacters(charactersRepository, EmptyFilter())
+    val searchCharactersUseCase = SearchCharacters(charactersRepository,
+        LimitFilter(SEARCH_RESULT_LIMIT))
     // create presenter. it will attach itself to the receiving view (this)
     CharactersPresenter(view = this, getCharactersUseCase = getCharactersUseCase,
         searchCharactersUseCase = searchCharactersUseCase,
@@ -107,6 +108,10 @@ class CharactersFragment : Fragment(), CharactersContract.View {
     val item = menu?.findItem(R.id.menu_item_search)
     searchView = item?.actionView as SearchView
     searchView.suggestionsAdapter = searchSuggestionsAdapter
+    // hack to show search suggestions with 1 character.
+    val searchAutoCompleteTextView = searchView.findViewById(
+        R.id.search_src_text) as AutoCompleteTextView
+    searchAutoCompleteTextView.threshold = 1
 
     // RxSearchView bindings don't suffice
     searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
@@ -114,7 +119,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
       override fun onSuggestionClick(position: Int): Boolean {
         searchItemIdPublisher.onNext(searchSuggestionsAdapter.getItemAt(position).id)
-        return true
+        return false
       }
     })
 
@@ -127,7 +132,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
         } else {
           hideSearchResults()
         }
-        return true
+        return false
       }
     })
   }
@@ -138,8 +143,8 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   }
 
   override fun onPause() {
-    super.onPause()
     presenter.stop()
+    super.onPause()
   }
 
   override fun setPresenter(presenter: CharactersContract.Presenter) {
@@ -175,12 +180,12 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
   private fun hideSearchResults() {
     Timber.d("Hiding search results")
-    searchSuggestionsAdapter.setCharactes(emptyList())
+    searchSuggestionsAdapter.setCharacters(emptyList())
   }
 
   override fun showSearchResult(characters: List<Character>) {
     Timber.d("Showing search results")
-    searchSuggestionsAdapter.setCharactes(
+    searchSuggestionsAdapter.setCharacters(
         characters
             .filter { character -> character.name != null && character.id != null && character.thumbnail != null }
             .map { character ->
@@ -207,7 +212,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
   companion object {
     private val SEARCH_RESULT_LIMIT = 5
-    private val MINIMUM_CHARS_TO_SEARCH = 3
+    private val MINIMUM_CHARS_TO_SEARCH = 1
 
     fun newInstance(): CharactersFragment = CharactersFragment()
   }

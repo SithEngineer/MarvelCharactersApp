@@ -1,11 +1,11 @@
 package io.github.sithengineer.marvelcharacters.data.model
 
-data class CharacterDataWrapper(
+data class DataWrapper<T>(
     val code: Int?,
     val status: String?,
     val copyright: String?,
     val attributionText: String?,
     val attributionHTML: String?,
     val etag: String?,
-    val data: CharacterDataContainer?
+    val data: DataContainer<T>
 )

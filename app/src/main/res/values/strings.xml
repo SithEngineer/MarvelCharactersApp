@@ -7,4 +7,7 @@
   <string name="fragment_character_details_related_links_wiki">WIKI</string>
   <string name="fragment_character_details_related_comic_link">COMICLINK</string>
   <string name="fragment_characters_search_hint">Search...</string>
+  <string name="fragment_character_details_description_title">Description</string>
+  <string name="fragment_character_details_stories_title">Stories</string>
+  <string name="fragment_character_details_events_title">Events</string>
 </resources>
