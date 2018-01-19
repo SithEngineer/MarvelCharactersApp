@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import butterknife.BindView
@@ -74,11 +75,15 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewUnBinder = ButterKnife.bind(this, view)
+
     adapter = CharactersAdapter()
     searchSuggestionsAdapter = CharacterSearchCursorAdapter(
         context!!)
     characters.adapter = adapter
     characters.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    characters.layoutAnimation = AnimationUtils.loadLayoutAnimation(context,
+        R.anim.list_animation_item_enter_from_bottom)
+
     searchPublisher = PublishSubject.create()
     searchItemIdPublisher = PublishSubject.create()
     attachPresenter()
@@ -104,12 +109,28 @@ class CharactersFragment : Fragment(), CharactersContract.View {
         ioScheduler = Schedulers.io(), viewScheduler = AndroidSchedulers.mainThread())
   }
 
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    val layoutManager = characters.layoutManager
+    outState.putParcelable(CHARACTERS_LIST_POSITION, layoutManager.onSaveInstanceState())
+  }
+
+  override fun onViewStateRestored(savedInstanceState: Bundle?) {
+    super.onViewStateRestored(savedInstanceState)
+    val layoutManager = characters.layoutManager
+    layoutManager.onRestoreInstanceState(
+        savedInstanceState?.getParcelable(CHARACTERS_LIST_POSITION))
+  }
+
   override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater?.inflate(R.menu.menu_search, menu)
     val item = menu?.findItem(R.id.menu_item_search)
     searchView = item?.actionView as SearchView
     searchView.suggestionsAdapter = searchSuggestionsAdapter
+    searchView.layoutAnimation = AnimationUtils.loadLayoutAnimation(context,
+        R.anim.list_animation_item_enter_from_top)
+
     // hack to show search suggestions with 1 character.
     val searchAutoCompleteTextView = searchView.findViewById(
         R.id.search_src_text) as AutoCompleteTextView
@@ -155,16 +176,22 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
   override fun showBigCenteredLoading() {
     mainCenteredProgressBar.visibility = View.VISIBLE
+    mainCenteredProgressBar.animate().setDuration(200L).alpha(1f)
   }
 
   override fun showSmallBottomLoading() {
     smallBottomProgressBar.visibility = View.VISIBLE
-    // TODO show/hide animation
+    smallBottomProgressBar.animate().setDuration(200L).translationYBy(-200f)
   }
 
   override fun hideLoading() {
-    mainCenteredProgressBar.visibility = View.GONE
-    smallBottomProgressBar.visibility = View.GONE
+    mainCenteredProgressBar.animate().setDuration(600L).alpha(0f).withEndAction({
+      mainCenteredProgressBar.visibility = View.GONE
+    })
+
+    smallBottomProgressBar.animate().setDuration(600L).translationYBy(200f).withEndAction({
+      smallBottomProgressBar.visibility = View.GONE
+    })
   }
 
   override fun showCharacters(characters: List<Character>) {
@@ -213,6 +240,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   }
 
   companion object {
+    private val CHARACTERS_LIST_POSITION = "charactersListPosition"
     private val SEARCH_RESULT_LIMIT = 5
     private val MINIMUM_CHARS_TO_SEARCH = 1
 

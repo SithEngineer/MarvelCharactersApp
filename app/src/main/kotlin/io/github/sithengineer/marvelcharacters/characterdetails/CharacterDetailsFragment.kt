@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -129,26 +130,32 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
     viewUnBinder = ButterKnife.bind(this, view)
 
     val itemDecoration = SpacingItemDecoration(DisplayUtils.convertDpToPixel(context, 10), isVertical = false)
+    val animation = AnimationUtils.loadLayoutAnimation(context,
+        R.anim.list_animation_item_enter_from_right)
 
     comics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     comicsAdapter = SmallComicBookAdapter()
     comics.adapter = comicsAdapter
     comics.addItemDecoration(itemDecoration)
+    comics.layoutAnimation = animation
 
     series.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     seriesAdapter = SmallComicBookAdapter()
     series.adapter = seriesAdapter
     series.addItemDecoration(itemDecoration)
+    series.layoutAnimation = animation
 
     stories.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     storiesAdapter = SmallComicBookAdapter()
     stories.adapter = storiesAdapter
     stories.addItemDecoration(itemDecoration)
+    stories.layoutAnimation = animation
 
     events.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     eventsAdapter = SmallComicBookAdapter()
     events.adapter = eventsAdapter
     events.addItemDecoration(itemDecoration)
+    events.layoutAnimation = animation
 
     attachPresenter(arguments?.getInt(CHARACTER_ID)!!)
   }
