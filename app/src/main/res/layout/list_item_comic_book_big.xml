@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/list_item_book_big_max_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:layout_marginEnd="8dp"
+    tools:background="@color/colorPrimaryDark"
+    >
+
+  <ImageView
+      android:id="@+id/list_item_book_image"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/list_item_book_big_image_height"
+      android:scaleType="centerCrop"
+      tools:background="#424021"
+      />
+
+  <TextView
+      android:id="@+id/list_item_book_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:paddingEnd="@dimen/list_item_comic_book_big_inner_padding"
+      android:paddingStart="@dimen/list_item_comic_book_big_inner_padding"
+      android:textAlignment="center"
+      tools:text="robust synopsis with two or more lines without pushing the text below"
+      />
+
+  <TextView
+      android:id="@+id/list_item_book_count"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_marginBottom="8dp"
+      android:maxLines="1"
+      android:paddingEnd="@dimen/list_item_comic_book_big_inner_padding"
+      android:paddingStart="@dimen/list_item_comic_book_big_inner_padding"
+      android:textAlignment="center"
+      android:textColor="@color/lighter_gray"
+      tools:text="1 / 10"
+      />
+
+</LinearLayout>

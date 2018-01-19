@@ -25,6 +25,10 @@
         android:name=".characterdetails.CharacterDetailsActivity"
         android:parentActivityName=".characters.CharactersActivity"
         />
+    <activity
+        android:name=".comicbookcovers.ComicBookCoversActivity"
+        android:parentActivityName=".characterdetails.CharacterDetailsActivity"
+        />
   </application>
 
 </manifest>

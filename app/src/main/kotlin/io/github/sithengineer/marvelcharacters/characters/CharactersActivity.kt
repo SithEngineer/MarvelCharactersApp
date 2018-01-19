@@ -5,11 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
-import io.github.sithengineer.marvelcharacters.AppNavigator
 import io.github.sithengineer.marvelcharacters.R
 import io.github.sithengineer.marvelcharacters.characterdetails.CharacterDetailsActivity
 
-class CharactersActivity : AppCompatActivity(), AppNavigator {
+class CharactersActivity : AppCompatActivity(), CharactersNavigator {
 
   @BindView(R.id.toolbar)
   lateinit var toolbar: Toolbar

@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.characters.adapter
+package io.github.sithengineer.marvelcharacters.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,7 +23,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
   private val bottomPublisher: PublishSubject<Int> = PublishSubject.create()
 
   private companion object {
-    val BOTTOM_OFFSET = 1
+    const val BOTTOM_OFFSET = 1
   }
 
   fun addCharacters(characters: List<Character>) {
@@ -63,7 +63,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
     private lateinit var character: Character
 
     internal companion object {
-      val LAYOUT_ID = R.layout.list_item_character
+      const val LAYOUT_ID = R.layout.list_item_character
     }
 
     init {

@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.characters.adapter
+package io.github.sithengineer.marvelcharacters.adapter
 
 import android.content.Context
 import android.database.Cursor
@@ -16,11 +16,14 @@ class CharacterSearchCursorAdapter(context: Context) : CursorAdapter(context, nu
     false) {
 
   private companion object {
-    private val ITEM_LAYOUT = R.layout.list_item_search_result
-    private val COLUMN_ID = "_id"
-    private val COLUMN_IMAGE_URL = "image_url"
-    private val COLUMN_NAME = android.app.SearchManager.SUGGEST_COLUMN_TEXT_1
-    private val COLUMN_NAMES = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_IMAGE_URL)
+    private const val ITEM_LAYOUT = R.layout.list_item_search_result
+    private const val COLUMN_ID = "_id"
+    private const val COLUMN_IMAGE_URL = "image_url"
+    private const val COLUMN_NAME = android.app.SearchManager.SUGGEST_COLUMN_TEXT_1
+    private val COLUMN_NAMES = arrayOf(
+        COLUMN_ID,
+        COLUMN_NAME,
+        COLUMN_IMAGE_URL)
   }
 
   private var characters: List<SearchCharacter> = emptyList()
@@ -34,7 +37,8 @@ class CharacterSearchCursorAdapter(context: Context) : CursorAdapter(context, nu
   }
 
   private fun getCursorFor(characters: List<SearchCharacter>): Cursor {
-    val cursor = MatrixCursor(COLUMN_NAMES, characters.size)
+    val cursor = MatrixCursor(
+        COLUMN_NAMES, characters.size)
     for (item in characters) {
       cursor.newRow()
           .add(item.id)
@@ -45,7 +49,8 @@ class CharacterSearchCursorAdapter(context: Context) : CursorAdapter(context, nu
   }
 
   override fun newView(context: Context?, cursor: Cursor?, parent: ViewGroup?): View {
-    return LayoutInflater.from(context).inflate(ITEM_LAYOUT, parent, false)
+    return LayoutInflater.from(context).inflate(
+        ITEM_LAYOUT, parent, false)
   }
 
   override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
@@ -68,9 +73,12 @@ class CharacterSearchCursorAdapter(context: Context) : CursorAdapter(context, nu
 
   private fun getSuggestionAtCurrentPosition(cursor: Cursor): SearchCharacter {
     return SearchCharacter(
-        imageUrl = cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_URL)),
-        name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-        id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+        imageUrl = cursor.getString(cursor.getColumnIndex(
+            COLUMN_IMAGE_URL)),
+        name = cursor.getString(cursor.getColumnIndex(
+            COLUMN_NAME)),
+        id = cursor.getInt(cursor.getColumnIndex(
+            COLUMN_ID))
     )
   }
 

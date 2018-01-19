@@ -10,4 +10,5 @@
   <string name="fragment_character_details_description_title">Description</string>
   <string name="fragment_character_details_stories_title">Stories</string>
   <string name="fragment_character_details_events_title">Events</string>
+  <string name="fragment_comic_book_covers_close_description">Close</string>
 </resources>

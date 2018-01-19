@@ -20,14 +20,18 @@ import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
-import io.github.sithengineer.marvelcharacters.characterdetails.adapter.CharacterDetailsComicBookAdapter
-import io.github.sithengineer.marvelcharacters.characterdetails.usecase.GetSpecificCharacter
+import io.github.sithengineer.marvelcharacters.adapter.SmallComicBookAdapter
 import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
+import io.github.sithengineer.marvelcharacters.util.DisplayUtils
 import io.github.sithengineer.marvelcharacters.util.SpacingItemDecoration
+import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
+import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 
 class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
@@ -76,11 +80,27 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
   lateinit var relatedLinksComicLink: TextView
 
   private lateinit var presenter: CharacterDetailsContract.Presenter
-  private lateinit var comicsAdapter: CharacterDetailsComicBookAdapter
-  private lateinit var seriesAdapter: CharacterDetailsComicBookAdapter
-  private lateinit var storiesAdapter: CharacterDetailsComicBookAdapter
-  private lateinit var eventsAdapter: CharacterDetailsComicBookAdapter
+  private lateinit var comicsAdapter: SmallComicBookAdapter
+  private lateinit var seriesAdapter: SmallComicBookAdapter
+  private lateinit var storiesAdapter: SmallComicBookAdapter
+  private lateinit var eventsAdapter: SmallComicBookAdapter
   private lateinit var viewUnBinder: Unbinder
+
+  private var navigator: CharactersDetailsNavigator? = null
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    try {
+      navigator = context as CharactersDetailsNavigator
+    } catch (e: ClassCastException) {
+      Timber.e(e, "Parent activity must implement ${CharactersDetailsNavigator::class.java.name}")
+    }
+  }
+
+  override fun onDetach() {
+    navigator = null
+    super.onDetach()
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -104,37 +124,29 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
     return super.onOptionsItemSelected(item)
   }
 
-  private fun convertDpToPixel(context: Context?, dp: Int): Int {
-    if (context != null) {
-      val density = context.resources.displayMetrics.density
-      return Math.round(dp.toFloat() * density)
-    }
-    return 0
-  }
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewUnBinder = ButterKnife.bind(this, view)
 
-    val itemDecoration = SpacingItemDecoration(convertDpToPixel(context, 10), isVertical = false)
+    val itemDecoration = SpacingItemDecoration(DisplayUtils.convertDpToPixel(context, 10), isVertical = false)
 
     comics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    comicsAdapter = CharacterDetailsComicBookAdapter()
+    comicsAdapter = SmallComicBookAdapter()
     comics.adapter = comicsAdapter
     comics.addItemDecoration(itemDecoration)
 
     series.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    seriesAdapter = CharacterDetailsComicBookAdapter()
+    seriesAdapter = SmallComicBookAdapter()
     series.adapter = seriesAdapter
     series.addItemDecoration(itemDecoration)
 
     stories.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    storiesAdapter = CharacterDetailsComicBookAdapter()
+    storiesAdapter = SmallComicBookAdapter()
     stories.adapter = storiesAdapter
     stories.addItemDecoration(itemDecoration)
 
     events.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    eventsAdapter = CharacterDetailsComicBookAdapter()
+    eventsAdapter = SmallComicBookAdapter()
     events.adapter = eventsAdapter
     events.addItemDecoration(itemDecoration)
 
@@ -148,8 +160,10 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
   private fun attachPresenter(characterId: Int) {
     val charactersRepository = (activity?.application as MarvelCharactersApplication).charactersRepository
-    val useCase = GetSpecificCharacter(charactersRepository)
-    CharacterDetailsPresenter(view = this, getCharacterUseCase = useCase, characterId = characterId,
+    val useCase = GetSpecificCharacterDetails(
+        charactersRepository)
+    CharacterDetailsPresenter(view = this, getCharacterDetailsUseCase = useCase,
+        characterId = characterId,
         ioScheduler = Schedulers.io(), viewScheduler = AndroidSchedulers.mainThread())
   }
 
@@ -191,13 +205,26 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
       descriptionText.visibility = View.GONE
     }
 
-    // TODO ...
-
-    Timber.v("Character urls: ${character.urls}")
-    // relatedLinksTitle.visibility = View.VISIBLE
-    //relatedLinksDetail.tag = character.urls!![0].type
-    //relatedLinksComicLink.tag = character.urls!![0].type
-    //relatedLinksWiki.tag = character.urls!![0].type
+    if (character.urls != null && character.urls.isNotEmpty()) {
+      // use a list for this elements?
+      relatedLinksTitle.visibility = View.VISIBLE
+      character.urls.forEach {
+        when(it.type?.toUpperCase()){
+          "DETAIL" -> {
+            relatedLinksDetail.visibility = View.VISIBLE
+            relatedLinksDetail.tag = it.url
+          }
+          "COMICLINK" -> {
+            relatedLinksComicLink.visibility = View.VISIBLE
+            relatedLinksComicLink.tag = it.url
+          }
+          "WIKI" -> {
+            relatedLinksWiki.visibility = View.VISIBLE
+            relatedLinksWiki.tag = it.url
+          }
+        }
+      }
+    }
   }
 
   override fun selectedRelatedLinksDetail(): Observable<String> {
@@ -223,10 +250,10 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
       comicsAdapter.setComics(
           comics.map { comic ->
-            CharacterDetailsComicBookAdapter.ComicBook(
+            ComicBook(
                 getImageUrlFrom(comic.thumbnail),
                 comic.title,
-                CharacterDetailsComicBookAdapter.ComicBookType.COMIC,
+                ComicBookType.COMIC,
                 comic.id
             )
           })
@@ -240,10 +267,10 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
       eventsAdapter.setComics(
           events.map { event ->
-            CharacterDetailsComicBookAdapter.ComicBook(
+            ComicBook(
                 getImageUrlFrom(event.thumbnail),
                 event.title,
-                CharacterDetailsComicBookAdapter.ComicBookType.EVENT,
+                ComicBookType.EVENT,
                 event.id
             )
           })
@@ -257,10 +284,10 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
       seriesAdapter.setComics(
           series.map { seriesItem ->
-            CharacterDetailsComicBookAdapter.ComicBook(
+            ComicBook(
                 getImageUrlFrom(seriesItem.thumbnail),
                 seriesItem.title,
-                CharacterDetailsComicBookAdapter.ComicBookType.SERIES,
+                ComicBookType.SERIES,
                 seriesItem.id
             )
           })
@@ -274,14 +301,38 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
       storiesAdapter.setComics(
           stories.map { story ->
-            CharacterDetailsComicBookAdapter.ComicBook(
+            ComicBook(
                 getImageUrlFrom(story.thumbnail),
                 story.title,
-                CharacterDetailsComicBookAdapter.ComicBookType.STORY,
+                ComicBookType.STORY,
                 story.id
             )
           })
     }
+  }
+
+  override fun selectedComicBook(): Observable<ComicBook> {
+    return comicsAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
+  }
+
+  override fun selectedSeriesBook(): Observable<ComicBook> {
+    return seriesAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
+  }
+
+  override fun selectedEventsBook(): Observable<ComicBook> {
+    return eventsAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
+  }
+
+  override fun selectedStoriesBook(): Observable<ComicBook> {
+    return storiesAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
+  }
+
+  override fun showComicsCovers(characterId: Int, comicBookType: ComicBookType) {
+    navigator?.navigateToBookCovers(characterId, comicBookType)
+  }
+
+  override fun showUrl(url: String) {
+    navigator?.showUrl(url)
   }
 
   companion object {

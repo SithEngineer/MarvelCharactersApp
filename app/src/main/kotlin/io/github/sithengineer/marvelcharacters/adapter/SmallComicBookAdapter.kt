@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.characterdetails.adapter
+package io.github.sithengineer.marvelcharacters.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,9 +11,11 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import io.github.sithengineer.marvelcharacters.R
+import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-class CharacterDetailsComicBookAdapter : RecyclerView.Adapter<CharacterDetailsComicBookAdapter.ViewHolder>() {
+class SmallComicBookAdapter : RecyclerView.Adapter<SmallComicBookAdapter.ViewHolder>() {
 
   private var comicBooks: List<ComicBook> = emptyList()
   private val comicsSelectedPublisher: PublishSubject<ComicBook> = PublishSubject.create()
@@ -23,17 +25,18 @@ class CharacterDetailsComicBookAdapter : RecyclerView.Adapter<CharacterDetailsCo
     notifyDataSetChanged()
   }
 
+  fun comicsSelected(): Observable<ComicBook> = comicsSelectedPublisher
+
   override fun getItemCount(): Int = comicBooks.size
 
-  override fun onBindViewHolder(holder: CharacterDetailsComicBookAdapter.ViewHolder?,
+  override fun onBindViewHolder(holder: ViewHolder?,
       position: Int) {
     holder?.bind(comicBooks.elementAt(position))
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent?.context).inflate(
-        CharacterDetailsComicBookAdapter.ViewHolder.LAYOUT_ID, parent, false)
-    return CharacterDetailsComicBookAdapter.ViewHolder(comicsSelectedPublisher, view)
+    val view = LayoutInflater.from(parent?.context).inflate(ViewHolder.LAYOUT_ID, parent, false)
+    return ViewHolder(comicsSelectedPublisher, view)
   }
 
   class ViewHolder(private val comicSummarySelectedPublisher: PublishSubject<ComicBook>,
@@ -48,7 +51,7 @@ class CharacterDetailsComicBookAdapter : RecyclerView.Adapter<CharacterDetailsCo
     private lateinit var comicBook: ComicBook
 
     internal companion object {
-      val LAYOUT_ID = R.layout.list_item_comic_book
+      const val LAYOUT_ID = R.layout.list_item_comic_book_small
     }
 
     init {
@@ -63,12 +66,5 @@ class CharacterDetailsComicBookAdapter : RecyclerView.Adapter<CharacterDetailsCo
       description.text = comicBook.name
       Glide.with(itemView).load(comicBook.imageUrl).into(image)
     }
-  }
-
-  data class ComicBook(val imageUrl: String, val name: String, val comicBookType: ComicBookType,
-      val id: Int)
-
-  enum class ComicBookType {
-    COMIC, SERIES, STORY, EVENT
   }
 }

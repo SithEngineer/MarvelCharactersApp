@@ -12,17 +12,16 @@ import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import io.github.sithengineer.marvelcharacters.AppNavigator
 import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
-import io.github.sithengineer.marvelcharacters.characters.adapter.CharacterSearchCursorAdapter
-import io.github.sithengineer.marvelcharacters.characters.adapter.CharactersAdapter
-import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
-import io.github.sithengineer.marvelcharacters.characters.usecase.SearchCharacters
-import io.github.sithengineer.marvelcharacters.characters.usecase.filter.EmptyFilter
-import io.github.sithengineer.marvelcharacters.characters.usecase.filter.LimitFilter
+import io.github.sithengineer.marvelcharacters.adapter.CharacterSearchCursorAdapter
+import io.github.sithengineer.marvelcharacters.adapter.CharactersAdapter
 import io.github.sithengineer.marvelcharacters.data.model.Character
 import io.github.sithengineer.marvelcharacters.data.model.Image
+import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters
+import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.usecase.filter.LimitFilter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -50,14 +49,14 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   private lateinit var viewUnBinder: Unbinder
   private lateinit var adapter: CharactersAdapter
   private lateinit var searchSuggestionsAdapter: CharacterSearchCursorAdapter
-  private var navigator: AppNavigator? = null
+  private var navigator: CharactersNavigator? = null
 
   override fun onAttach(context: Context?) {
     super.onAttach(context)
     try {
-      navigator = context as AppNavigator
+      navigator = context as CharactersNavigator
     } catch (e: ClassCastException) {
-      Timber.e(e, "Parent activity must implement ${AppNavigator::class.java.name}")
+      Timber.e(e, "Parent activity must implement ${CharactersNavigator::class.java.name}")
     }
   }
 
@@ -76,7 +75,8 @@ class CharactersFragment : Fragment(), CharactersContract.View {
     super.onViewCreated(view, savedInstanceState)
     viewUnBinder = ButterKnife.bind(this, view)
     adapter = CharactersAdapter()
-    searchSuggestionsAdapter = CharacterSearchCursorAdapter(context!!)
+    searchSuggestionsAdapter = CharacterSearchCursorAdapter(
+        context!!)
     characters.adapter = adapter
     characters.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     searchPublisher = PublishSubject.create()
@@ -93,10 +93,12 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
   private fun attachPresenter() {
     val charactersRepository = (activity?.application as MarvelCharactersApplication).charactersRepository
-    val getCharactersUseCase = GetCharacters(charactersRepository, EmptyFilter())
-    val searchCharactersUseCase = SearchCharacters(charactersRepository,
+    val getCharactersUseCase = GetCharacters(
+        charactersRepository, EmptyFilter())
+    val searchCharactersUseCase = SearchCharacters(
+        charactersRepository,
         LimitFilter(SEARCH_RESULT_LIMIT))
-    // create presenter. it will attach itself to the receiving view (this)
+
     CharactersPresenter(view = this, getCharactersUseCase = getCharactersUseCase,
         searchCharactersUseCase = searchCharactersUseCase,
         ioScheduler = Schedulers.io(), viewScheduler = AndroidSchedulers.mainThread())

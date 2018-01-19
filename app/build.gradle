@@ -120,4 +120,6 @@ dependencies {
   // view injection
   implementation 'com.jakewharton:butterknife:8.5.1'
   kapt 'com.jakewharton:butterknife-compiler:8.5.1'
+  // imageview manipulation
+  implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 }

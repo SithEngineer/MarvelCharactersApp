@@ -1,13 +1,12 @@
 package io.github.sithengineer.marvelcharacters.characters
 
 import com.nhaarman.mockito_kotlin.*
-import io.github.sithengineer.marvelcharacters.characters.usecase.filter.EmptyFilter
-import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.reactivex.BackpressureStrategy
-import io.reactivex.rxkotlin.toSingle
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.spek.api.Spek
@@ -33,7 +32,8 @@ class CharactersPresenterTest : Spek({
     //val charactersRepository = CharactersRepository.getInstance(charactersRemoteDataSource)
     val charactersRepository = CharactersRepository(charactersRemoteDataSource)
 
-    val getCharactersUseCase = GetCharacters(charactersRepository, EmptyFilter())
+    val getCharactersUseCase = GetCharacters(
+        charactersRepository, EmptyFilter())
     val charactersPresenter = CharactersPresenter(view, getCharactersUseCase,
         Schedulers.trampoline(), Schedulers.trampoline())
 

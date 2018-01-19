@@ -1,7 +1,7 @@
 package io.github.sithengineer.marvelcharacters.characters
 
-import io.github.sithengineer.marvelcharacters.characters.usecase.GetCharacters
-import io.github.sithengineer.marvelcharacters.characters.usecase.SearchCharacters
+import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -18,7 +18,7 @@ class CharactersPresenter(
   private var charactersOffset = 0
 
   private companion object {
-    val CHARACTERS_FETCH_LIMIT = 10
+    const val CHARACTERS_FETCH_LIMIT = 10
   }
 
   init {

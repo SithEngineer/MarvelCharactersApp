@@ -1,13 +1,13 @@
-package io.github.sithengineer.marvelcharacters.characterdetails.usecase
+package io.github.sithengineer.marvelcharacters.usecase
 
 import io.github.sithengineer.marvelcharacters.UseCase
 import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.reactivex.Single
 
-class GetSpecificCharacter(
+class GetSpecificCharacterDetails(
     private val charactersRepository: CharactersRepository)
-  : UseCase<GetSpecificCharacter.Request, GetSpecificCharacter.Response> {
+  : UseCase<GetSpecificCharacterDetails.Request, GetSpecificCharacterDetails.Response> {
 
   override fun execute(request: Request): Response {
     val character = charactersRepository.getCharacter(request.characterId)

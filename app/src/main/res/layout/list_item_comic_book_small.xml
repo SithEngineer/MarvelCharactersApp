@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/list_item_book_max_width"
+    android:layout_width="@dimen/list_item_book_small_max_width"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:layout_marginEnd="8dp"
@@ -9,19 +9,19 @@
 
   <ImageView
       android:id="@+id/list_item_book_image"
-      android:layout_width="@dimen/list_item_book_max_width"
-      android:layout_height="@dimen/list_item_book_image_height"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/list_item_book_small_image_height"
       android:scaleType="centerCrop"
       tools:background="#424021"
       />
 
   <TextView
       android:id="@+id/list_item_book_text"
-      android:layout_width="@dimen/list_item_book_max_width"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textAlignment="center"
       android:maxLines="2"
-      android:ellipsize="marquee"
+      android:ellipsize="end"
       tools:text="robust synopsis with two or more lines"
       tools:background="@color/colorPrimaryDark"
       />

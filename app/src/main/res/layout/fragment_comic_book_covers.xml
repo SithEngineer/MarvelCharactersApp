@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    >
+
+  <ProgressBar
+      android:id="@+id/fragment_comic_book_covers_progress"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:layout_gravity="center"
+      android:visibility="gone"
+      tools:visibility="gone"
+      android:layout_centerInParent="true"
+      />
+
+  <ImageView
+      android:id="@+id/fragment_comic_book_covers_close"
+      android:layout_width="34dp"
+      android:layout_height="34dp"
+      android:layout_alignParentEnd="true"
+      android:layout_margin="20dp"
+      android:contentDescription="@string/fragment_comic_book_covers_close_description"
+      android:src="@drawable/ic_close_white_24dp"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/fragment_comic_book_covers_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_centerInParent="true"
+      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+      tools:listitem="@layout/list_item_comic_book_big"
+      />
+
+</RelativeLayout>

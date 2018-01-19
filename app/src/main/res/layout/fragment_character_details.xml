@@ -37,17 +37,19 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:scaleType="centerCrop"
+          tools:src="@color/white"
           />
 
       <TextView
           android:id="@+id/fragment_character_details_name"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="60dp"
           android:layout_alignParentBottom="true"
-          android:layout_marginBottom="40dp"
           android:paddingEnd="@dimen/fragment_character_details_inner_padding"
           android:paddingStart="@dimen/fragment_character_details_inner_padding"
+          android:paddingTop="20dp"
           android:textSize="24sp"
+          android:background="@color/shade"
           tools:text="Hulk"
           style="@style/CharacterName"
           />
@@ -96,11 +98,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-        android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_comic_book"
+        tools:listitem="@layout/list_item_comic_book_small"
         tools:visibility="visible"
         />
 
@@ -126,11 +126,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-        android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_comic_book"
+        tools:listitem="@layout/list_item_comic_book_small"
         tools:visibility="visible"
         />
 
@@ -156,11 +154,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-        android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_comic_book"
+        tools:listitem="@layout/list_item_comic_book_small"
         tools:visibility="visible"
         />
 
@@ -186,11 +182,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-        android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_comic_book"
+        tools:listitem="@layout/list_item_comic_book_small"
         tools:visibility="visible"
         />
 

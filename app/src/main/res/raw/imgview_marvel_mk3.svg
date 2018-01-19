@@ -1,0 +1,13 @@
+<svg width="874" height="874" xmlns="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path transform="rotate(-90.0687, 439.834, 294.409)" id="svg_2" d="m-42.388943,737.210876l180.835583,-885.603424l602.774307,0l180.835754,885.603424l-964.445644,0z" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="#000000"/>
+  <path id="svg_3" d="m80.489471,856.973938l0.279381,-1.48999l0.931244,0l0.279381,1.48999l-1.490005,0z" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="#000000"/>
+  <path id="svg_4" d="m103.706131,853.657227l0.279381,-1.48999l0.931244,0l0.279381,1.48999l-1.490005,0z" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="#000000"/>
+ </g>
+</svg>

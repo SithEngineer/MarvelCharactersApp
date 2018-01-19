@@ -2,14 +2,17 @@ package io.github.sithengineer.marvelcharacters.characterdetails
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import io.github.sithengineer.marvelcharacters.R
+import io.github.sithengineer.marvelcharacters.comicbookcovers.ComicBookCoversActivity
+import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType
 
-class CharacterDetailsActivity : AppCompatActivity() {
+class CharacterDetailsActivity : AppCompatActivity(), CharactersDetailsNavigator {
 
   @BindView(R.id.toolbar)
   lateinit var toolbar: Toolbar
@@ -26,8 +29,7 @@ class CharacterDetailsActivity : AppCompatActivity() {
     supportFragmentManager
         .beginTransaction()
         .add(R.id.fragment_placeholder,
-            CharacterDetailsFragment.newInstance(intent.extras.getInt(CHARACTER_ID)),
-            "detail")
+            CharacterDetailsFragment.newInstance(intent.extras.getInt(CHARACTER_ID)))
         .commit()
   }
 
@@ -38,6 +40,16 @@ class CharacterDetailsActivity : AppCompatActivity() {
       it.setDisplayHomeAsUpEnabled(true)
       it.setDisplayShowHomeEnabled(true)
     }
+  }
+
+  override fun navigateToBookCovers(characterId: Int, comicBookType: ComicBookType) {
+    val intent = ComicBookCoversActivity.getIntent(this, characterId, comicBookType.name)
+    startActivity(intent)
+  }
+
+  override fun showUrl(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW,  Uri.parse(url))
+    startActivity(Intent.createChooser(intent, ""))
   }
 
   companion object {
