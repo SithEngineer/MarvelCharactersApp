@@ -27,7 +27,7 @@ class ComicBookCoversPresenter(
 
   private fun handleCloseSelected() {
     compositeSubscription.add(
-        view.selectedExit()
+        view.onSelectedExit()
             .observeOn(viewScheduler)
             .subscribe({ _ ->
               view.navigateBack()

@@ -12,10 +12,13 @@ interface CharacterDetailsContract {
     fun showLoading()
     fun hideLoading()
 
-    fun selectedRelatedLinksDetail(): Observable<String>
-    fun selectedRelatedLinksComicLink(): Observable<String>
-    fun selectedRelatedLinksWiki(): Observable<String>
-    fun selectedComicBook(): Observable<ComicBook>
+    fun onSelectedRelatedLinksDetail(): Observable<String>
+    fun onSelectedRelatedLinksComicLink(): Observable<String>
+    fun onSelectedRelatedLinksWiki(): Observable<String>
+    fun onSelectedComicBook(): Observable<ComicBook>
+    fun onSelectedSeriesBook(): Observable<ComicBook>
+    fun onSelectedEventsBook(): Observable<ComicBook>
+    fun onSelectedStoriesBook(): Observable<ComicBook>
 
     fun showCharacterDetails(character: Character)
     fun showCharacterComics(comics: List<Comic>)
@@ -24,9 +27,6 @@ interface CharacterDetailsContract {
     fun showCharacterStories(stories: List<Story>)
     fun showComicsCovers(characterId: Int, comicBookType: ComicBookType)
     fun showUrl(url: String)
-    fun selectedSeriesBook(): Observable<ComicBook>
-    fun selectedEventsBook(): Observable<ComicBook>
-    fun selectedStoriesBook(): Observable<ComicBook>
   }
 
   interface Presenter : BasePresenter

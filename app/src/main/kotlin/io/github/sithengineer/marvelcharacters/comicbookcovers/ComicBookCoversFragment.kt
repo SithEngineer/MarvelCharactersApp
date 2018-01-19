@@ -127,7 +127,7 @@ class ComicBookCoversFragment : Fragment(), ComicBookCoversContract.View {
     navigator?.navigateBack()
   }
 
-  override fun selectedExit(): Observable<Any> {
+  override fun onSelectedExit(): Observable<Any> {
     return RxView.clicks(closeView).debounce(400, TimeUnit.MILLISECONDS)
   }
 

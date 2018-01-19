@@ -236,15 +236,15 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
     }
   }
 
-  override fun selectedRelatedLinksDetail(): Observable<String> {
+  override fun onSelectedRelatedLinksDetail(): Observable<String> {
     return RxView.clicks(relatedLinksDetail).map { _ -> relatedLinksDetail.tag as String }
   }
 
-  override fun selectedRelatedLinksComicLink(): Observable<String> {
+  override fun onSelectedRelatedLinksComicLink(): Observable<String> {
     return RxView.clicks(relatedLinksComicLink).map { _ -> relatedLinksComicLink.tag as String }
   }
 
-  override fun selectedRelatedLinksWiki(): Observable<String> {
+  override fun onSelectedRelatedLinksWiki(): Observable<String> {
     return RxView.clicks(relatedLinksWiki).map { _ -> relatedLinksWiki.tag as String }
   }
 
@@ -320,19 +320,19 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
     }
   }
 
-  override fun selectedComicBook(): Observable<ComicBook> {
+  override fun onSelectedComicBook(): Observable<ComicBook> {
     return comicsAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
   }
 
-  override fun selectedSeriesBook(): Observable<ComicBook> {
+  override fun onSelectedSeriesBook(): Observable<ComicBook> {
     return seriesAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
   }
 
-  override fun selectedEventsBook(): Observable<ComicBook> {
+  override fun onSelectedEventsBook(): Observable<ComicBook> {
     return eventsAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
   }
 
-  override fun selectedStoriesBook(): Observable<ComicBook> {
+  override fun onSelectedStoriesBook(): Observable<ComicBook> {
     return storiesAdapter.comicsSelected().debounce(400, TimeUnit.MILLISECONDS)
   }
 

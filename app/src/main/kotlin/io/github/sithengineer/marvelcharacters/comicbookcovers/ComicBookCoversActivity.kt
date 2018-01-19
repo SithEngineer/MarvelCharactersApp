@@ -21,7 +21,7 @@ class ComicBookCoversActivity : AppCompatActivity(), ComicBookCoversNavigator {
   private fun showFragment() {
     supportFragmentManager
         .beginTransaction()
-        .add(R.id.fragment_placeholder,
+        .replace(R.id.fragment_placeholder,
             ComicBookCoversFragment.newInstance(
                 intent.extras.getInt(CHARACTER_ID),
                 intent.extras.getString(COMIC_BOOK_TYPE)

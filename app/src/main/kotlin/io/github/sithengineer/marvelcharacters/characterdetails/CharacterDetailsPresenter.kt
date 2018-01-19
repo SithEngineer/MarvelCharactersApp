@@ -38,9 +38,9 @@ class CharacterDetailsPresenter(
   private fun handleSelectedRelatedLinks() {
     compositeSubscription.add(
         Observable.merge(arrayListOf(
-            view.selectedRelatedLinksComicLink(),
-            view.selectedRelatedLinksDetail(),
-            view.selectedRelatedLinksWiki()
+            view.onSelectedRelatedLinksComicLink(),
+            view.onSelectedRelatedLinksDetail(),
+            view.onSelectedRelatedLinksWiki()
         )).subscribe({ url ->
           view.showUrl(url)
         }, { err ->
@@ -53,10 +53,10 @@ class CharacterDetailsPresenter(
     compositeSubscription.add(
         Observable.merge(
             arrayListOf(
-                view.selectedComicBook(),
-                view.selectedEventsBook(),
-                view.selectedSeriesBook(),
-                view.selectedStoriesBook()
+                view.onSelectedComicBook(),
+                view.onSelectedEventsBook(),
+                view.onSelectedSeriesBook(),
+                view.onSelectedStoriesBook()
             )
         )
             .observeOn(viewScheduler)

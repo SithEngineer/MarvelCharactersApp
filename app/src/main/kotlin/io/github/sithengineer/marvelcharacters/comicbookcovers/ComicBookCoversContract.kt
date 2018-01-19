@@ -9,11 +9,9 @@ interface ComicBookCoversContract {
   interface View : BaseView<Presenter> {
     fun showLoading()
     fun hideLoading()
-
-    fun selectedExit(): Observable<Any>
-
     fun showBookCovers(bookCovers: List<ComicBook>)
     fun navigateBack()
+    fun onSelectedExit(): Observable<Any>
   }
 
   interface Presenter : BasePresenter

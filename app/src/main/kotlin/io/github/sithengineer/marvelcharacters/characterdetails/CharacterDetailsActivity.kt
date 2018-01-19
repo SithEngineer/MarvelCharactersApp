@@ -28,7 +28,7 @@ class CharacterDetailsActivity : AppCompatActivity(), CharactersDetailsNavigator
   private fun showFragment() {
     supportFragmentManager
         .beginTransaction()
-        .add(R.id.fragment_placeholder,
+        .replace(R.id.fragment_placeholder,
             CharacterDetailsFragment.newInstance(intent.extras.getInt(CHARACTER_ID)))
         .commit()
   }
@@ -49,7 +49,7 @@ class CharacterDetailsActivity : AppCompatActivity(), CharactersDetailsNavigator
   }
 
   override fun showUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW,  Uri.parse(url))
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     startActivity(Intent.createChooser(intent, ""))
   }
 

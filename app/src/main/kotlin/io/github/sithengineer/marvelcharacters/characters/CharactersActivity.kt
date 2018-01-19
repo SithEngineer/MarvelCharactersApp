@@ -29,7 +29,7 @@ class CharactersActivity : AppCompatActivity(), CharactersNavigator {
   private fun showFragment() {
     supportFragmentManager
         .beginTransaction()
-        .add(R.id.fragment_placeholder, CharactersFragment.newInstance())
+        .replace(R.id.fragment_placeholder, CharactersFragment.newInstance())
         .commit()
   }
 
