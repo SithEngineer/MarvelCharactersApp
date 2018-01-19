@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import butterknife.BindView
@@ -25,6 +24,7 @@ import io.github.sithengineer.marvelcharacters.adapter.SmallComicBookAdapter
 import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
 import io.github.sithengineer.marvelcharacters.util.DisplayUtils
+import io.github.sithengineer.marvelcharacters.util.MarvelImageView
 import io.github.sithengineer.marvelcharacters.util.SpacingItemDecoration
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType
@@ -41,10 +41,7 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
   lateinit var progressBar: ProgressBar
 
   @BindView(R.id.fragment_character_details_header_image)
-  lateinit var characterImage: ImageView
-
-  @BindView(R.id.fragment_character_details_name)
-  lateinit var characterName: TextView
+  lateinit var characterImage: MarvelImageView
 
   @BindView(R.id.fragment_character_details_description_title)
   lateinit var descriptionTitle: TextView
@@ -129,7 +126,8 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
     super.onViewCreated(view, savedInstanceState)
     viewUnBinder = ButterKnife.bind(this, view)
 
-    val itemDecoration = SpacingItemDecoration(DisplayUtils.convertDpToPixel(context, 10), isVertical = false)
+    val itemDecoration = SpacingItemDecoration(DisplayUtils.convertDpToPixel(context, 10),
+        isVertical = false)
     val animation = AnimationUtils.loadLayoutAnimation(context,
         R.anim.list_animation_item_enter_from_right)
 
@@ -190,10 +188,14 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
 
   override fun showLoading() {
     progressBar.visibility = View.VISIBLE
+    progressBar.animate().setDuration(200L).alpha(1f)
   }
 
   override fun hideLoading() {
     progressBar.visibility = View.GONE
+    progressBar.animate().setDuration(600L).alpha(0f).withEndAction({
+      progressBar.visibility = View.GONE
+    })
   }
 
   override fun showCharacterDetails(character: Character) {
@@ -203,7 +205,7 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
           .into(characterImage)
     }
 
-    characterName.text = character.name
+    (activity as AppCompatActivity).supportActionBar?.title = character.name
 
     if (character.description != null && character.description.isNotBlank()) {
       descriptionText.text = character.description
@@ -216,7 +218,7 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
       // use a list for this elements?
       relatedLinksTitle.visibility = View.VISIBLE
       character.urls.forEach {
-        when(it.type?.toUpperCase()){
+        when (it.type?.toUpperCase()) {
           "DETAIL" -> {
             relatedLinksDetail.visibility = View.VISIBLE
             relatedLinksDetail.tag = it.url

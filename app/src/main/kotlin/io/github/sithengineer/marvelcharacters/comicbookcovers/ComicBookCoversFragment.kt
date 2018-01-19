@@ -113,10 +113,14 @@ class ComicBookCoversFragment : Fragment(), ComicBookCoversContract.View {
 
   override fun showLoading() {
     progress.visibility = View.VISIBLE
+    progress.animate().setDuration(200L).alpha(1f)
   }
 
   override fun hideLoading() {
     progress.visibility = View.GONE
+    progress.animate().setDuration(600L).alpha(0f).withEndAction({
+      progress.visibility = View.GONE
+    })
   }
 
   override fun navigateBack() {

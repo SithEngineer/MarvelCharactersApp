@@ -45,7 +45,7 @@ class CharactersPresenter(
 
   private fun handleCharactersListReachedBottom() {
     compositeSubscription.add(
-        view.scrolledToBottomWithOffset().observeOn(viewScheduler).subscribe({ offset ->
+        view.onScrolledToBottomWithOffset().observeOn(viewScheduler).subscribe({ offset ->
           Timber.d("reached bottom with offset = $offset")
           loadCharacters()
         }))
@@ -53,7 +53,7 @@ class CharactersPresenter(
 
   private fun handleCharacterSelected() {
     compositeSubscription.add(
-        view.characterSelected().observeOn(viewScheduler).subscribe { character ->
+        view.onCharacterSelected().observeOn(viewScheduler).subscribe { character ->
           Timber.d("Character selected: $character")
           character.id?.let {
             view.showCharacterDetails(it)
@@ -64,7 +64,7 @@ class CharactersPresenter(
 
   private fun handleSearchItemPressed() {
     compositeSubscription.add(
-        view.searchedItemPressedWithId()
+        view.onSearchedItemPressedWithId()
             .subscribeOn(viewScheduler)
             .subscribe({ characterId ->
               view.showCharacterDetails(characterId)
@@ -76,7 +76,7 @@ class CharactersPresenter(
 
   private fun handleSearchTerms() {
     compositeSubscription.add(
-        view.searchedForTerm()
+        view.onSearchedForTerm()
             .doOnNext { query -> Timber.d("searching for: $query") }
             .flatMap { query ->
               val request = SearchCharacters.Request(query)

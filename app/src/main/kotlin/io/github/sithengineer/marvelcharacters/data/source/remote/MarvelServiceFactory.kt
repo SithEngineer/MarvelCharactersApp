@@ -50,7 +50,7 @@ object MarvelServiceFactory {
     val clientBuilder = OkHttpClient.Builder()
         .cache(Cache(cacheDirectory, cacheSize))
         .addInterceptor(httpLoggingInterceptor)
-        .addInterceptor(forceCacheInterceptor)
+        .addNetworkInterceptor(forceCacheInterceptor)
 
     if (isDebug) {
       clientBuilder.addNetworkInterceptor(StethoInterceptor())

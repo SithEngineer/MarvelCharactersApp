@@ -199,11 +199,11 @@ class CharactersFragment : Fragment(), CharactersContract.View {
     Timber.d("Showing characters")
   }
 
-  override fun searchedItemPressedWithId(): Observable<Int> {
+  override fun onSearchedItemPressedWithId(): Observable<Int> {
     return searchItemIdPublisher
   }
 
-  override fun searchedForTerm(): Observable<String> {
+  override fun onSearchedForTerm(): Observable<String> {
     return searchPublisher
   }
 
@@ -226,11 +226,11 @@ class CharactersFragment : Fragment(), CharactersContract.View {
 
   private fun getImageUrl(image: Image): String = "${image.path}.${image.extension}"
 
-  override fun scrolledToBottomWithOffset(): Observable<Int> {
+  override fun onScrolledToBottomWithOffset(): Observable<Int> {
     return adapter.reachedBottomWithOffset().debounce(400, TimeUnit.MILLISECONDS)
   }
 
-  override fun characterSelected(): Observable<Character> {
+  override fun onCharacterSelected(): Observable<Character> {
     return adapter.characterSelected().debounce(400, TimeUnit.MILLISECONDS)
   }
 

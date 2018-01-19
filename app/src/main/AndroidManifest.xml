@@ -14,6 +14,7 @@
       android:theme="@style/AppTheme"
       android:name=".MarvelCharactersApplication"
       android:fullBackupContent="false"
+      android:hardwareAccelerated="true"
       >
     <activity android:name=".characters.CharactersActivity">
       <intent-filter>

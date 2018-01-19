@@ -2,6 +2,7 @@ package io.github.sithengineer.marvelcharacters
 
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.timber.StethoTree
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
@@ -36,10 +37,15 @@ class MarvelCharactersApplication : Application() {
   }
 
   private fun createCharactersRepository(context: Context) {
+    val connectivityManager = context.getSystemService(
+        Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
     val marvelApi = MarvelServiceFactory.makeMarvelCharactersApi(BuildConfig.DEBUG,
-        context.cacheDir, BuildConfig.CACHE_SIZE, NetworkStatus())
+        context.cacheDir, BuildConfig.CACHE_SIZE, NetworkStatus(connectivityManager))
+
     val charactersRemoteDataSource = CharactersRemoteDataSource(marvelApi,
         BuildConfig.MARVEL_API_PUBLIC_KEY, BuildConfig.MARVEL_API_PRIVATE_KEY)
+
     charactersRepository = CharactersRepository(charactersRemoteDataSource)
   }
 

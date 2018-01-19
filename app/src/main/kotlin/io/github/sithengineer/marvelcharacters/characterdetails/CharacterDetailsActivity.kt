@@ -34,6 +34,7 @@ class CharacterDetailsActivity : AppCompatActivity(), CharactersDetailsNavigator
   }
 
   private fun setupToolbar() {
+    toolbar.title = ""
     setSupportActionBar(toolbar)
     val ab = supportActionBar
     ab?.let {

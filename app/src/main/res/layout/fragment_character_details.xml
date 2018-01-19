@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:orientation="vertical"
     tools:context="io.github.sithengineer.marvelcharacters.characterdetails.CharacterDetailsFragment"
     >
   <LinearLayout
@@ -13,15 +11,6 @@
       android:background="@drawable/background"
       android:orientation="vertical"
       >
-
-    <ProgressBar
-        android:id="@+id/fragment_character_details_progress"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone"
-        />
 
     <!--
      Main character description section
@@ -32,34 +21,29 @@
         android:layout_height="300dp"
         >
 
-      <ImageView
+      <io.github.sithengineer.marvelcharacters.util.MarvelImageView
           android:id="@+id/fragment_character_details_header_image"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:scaleType="centerCrop"
-          tools:src="@color/white"
+          android:src="@color/white"
           />
 
-      <TextView
-          android:id="@+id/fragment_character_details_name"
-          android:layout_width="match_parent"
-          android:layout_height="60dp"
-          android:layout_alignParentBottom="true"
-          android:paddingEnd="@dimen/fragment_character_details_inner_padding"
-          android:paddingStart="@dimen/fragment_character_details_inner_padding"
-          android:paddingTop="20dp"
-          android:textSize="24sp"
-          android:background="@color/shade"
-          tools:text="Hulk"
-          style="@style/CharacterName"
+      <ProgressBar
+          android:id="@+id/fragment_character_details_progress"
+          android:layout_width="60dp"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:indeterminate="true"
+          android:visibility="visible"
           />
+
     </RelativeLayout>
 
     <TextView
         android:id="@+id/fragment_character_details_description_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fragment_character_details_inner_padding"
         android:paddingEnd="@dimen/fragment_character_details_inner_padding"
         android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:text="@string/fragment_character_details_description_title"
@@ -234,6 +218,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_character_details_section_margin"
+        android:layout_marginBottom="@dimen/fragment_character_details_section_margin"
         android:paddingEnd="@dimen/fragment_character_details_inner_padding"
         android:paddingStart="@dimen/fragment_character_details_inner_padding"
         android:text="@string/fragment_character_details_related_comic_link"
@@ -242,4 +227,5 @@
         />
 
   </LinearLayout>
+
 </ScrollView>

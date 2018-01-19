@@ -1,7 +1,9 @@
 package io.github.sithengineer.marvelcharacters.util
 
-class NetworkStatus {
+import android.net.ConnectivityManager
+
+class NetworkStatus(private val connectivityManager: ConnectivityManager) {
   fun available(): Boolean {
-    return true
+    return connectivityManager.activeNetworkInfo.isConnectedOrConnecting
   }
 }

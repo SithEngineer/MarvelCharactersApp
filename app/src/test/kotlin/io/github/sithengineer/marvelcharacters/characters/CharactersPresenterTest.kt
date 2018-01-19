@@ -1,12 +1,14 @@
 package io.github.sithengineer.marvelcharacters.characters
 
 import com.nhaarman.mockito_kotlin.*
-import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter
-import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.data.model.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
-import io.reactivex.BackpressureStrategy
+import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
+import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters
+import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter
+import io.github.sithengineer.marvelcharacters.usecase.filter.LimitFilter
+import io.reactivex.rxkotlin.toSingle
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.spek.api.Spek
@@ -21,9 +23,14 @@ class CharactersPresenterTest : Spek({
   given("a presenter for the list of characters view") {
 
     val publisherCharacterSelected = PublishSubject.create<Character>()
+    val publisherScrolledToBottomWithOffset = PublishSubject.create<Int>()
+    val publisherSearchedForTerm = PublishSubject.create<String>()
+    val publisherSearchItemPressedWithId = PublishSubject.create<Int>()
     val view = mock<CharactersContract.View> {
-      on { characterSelected() } doReturn publisherCharacterSelected.toFlowable(
-          BackpressureStrategy.DROP)
+      on { onCharacterSelected() } doReturn publisherCharacterSelected
+      on { onScrolledToBottomWithOffset() } doReturn publisherScrolledToBottomWithOffset
+      on { onSearchedForTerm() } doReturn publisherSearchedForTerm
+      on { onSearchedItemPressedWithId() } doReturn publisherSearchItemPressedWithId
     }
 
     val charactersRemoteDataSource = mock<CharactersDataSource> {
@@ -34,7 +41,10 @@ class CharactersPresenterTest : Spek({
 
     val getCharactersUseCase = GetCharacters(
         charactersRepository, EmptyFilter())
-    val charactersPresenter = CharactersPresenter(view, getCharactersUseCase,
+    val searchCharacters = SearchCharacters(
+        charactersRepository, LimitFilter(2)
+    )
+    val charactersPresenter = CharactersPresenter(view, getCharactersUseCase, searchCharacters,
         Schedulers.trampoline(), Schedulers.trampoline())
 
     on("characters view created") {
@@ -71,7 +81,7 @@ class CharactersPresenterTest : Spek({
   }
 })
 
-private fun giveCharactersWrapper(): DataWrapper {
+private fun giveCharactersWrapper(): DataWrapper<Character> {
   val characters: MutableList<Character> = givenCharacters()
   val dataContainer = DataContainer(0, 0, 0, 0, characters)
   return DataWrapper(200, "OK", "", "", "", "", dataContainer)
