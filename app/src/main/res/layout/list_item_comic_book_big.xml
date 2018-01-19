@@ -23,6 +23,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
       android:ellipsize="end"
+      android:lines="2"
       android:maxLines="2"
       android:paddingEnd="@dimen/list_item_comic_book_big_inner_padding"
       android:paddingStart="@dimen/list_item_comic_book_big_inner_padding"

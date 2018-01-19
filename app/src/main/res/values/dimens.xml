@@ -3,8 +3,9 @@
   <dimen name="default_button_height">48dp</dimen>
   <dimen name="list_item_book_small_max_width">120dp</dimen>
   <dimen name="list_item_book_small_image_height">180dp</dimen>
-  <dimen name="list_item_book_big_max_width">280dp</dimen>
+  <dimen name="list_item_book_big_max_width">267dp</dimen>
   <dimen name="list_item_book_big_image_height">400dp</dimen>
+  <dimen name="fragment_comic_book_cover_bottom_padding">60dp</dimen>
   <dimen name="fragment_character_details_inner_padding">12dp</dimen>
   <dimen name="title_text_size">16sp</dimen>
   <dimen name="character_name_text_size">18sp</dimen>

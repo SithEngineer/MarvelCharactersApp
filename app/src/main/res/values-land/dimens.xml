@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="list_item_book_big_max_width">147dp</dimen>
+  <dimen name="list_item_book_big_image_height">220dp</dimen>
+  <dimen name="fragment_comic_book_cover_bottom_padding">10dp</dimen>
+</resources>

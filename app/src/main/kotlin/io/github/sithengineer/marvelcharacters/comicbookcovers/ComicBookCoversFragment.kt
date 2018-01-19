@@ -82,7 +82,7 @@ class ComicBookCoversFragment : Fragment(), ComicBookCoversContract.View {
   }
 
   override fun onDestroyView() {
-    super.onDestroyView()
+    progress.animate().cancel()
     viewUnBinder.unbind()
     super.onDestroyView()
   }

@@ -159,6 +159,7 @@ class CharacterDetailsFragment : Fragment(), CharacterDetailsContract.View {
   }
 
   override fun onDestroyView() {
+    progressBar.animate().cancel()
     viewUnBinder.unbind()
     super.onDestroyView()
   }

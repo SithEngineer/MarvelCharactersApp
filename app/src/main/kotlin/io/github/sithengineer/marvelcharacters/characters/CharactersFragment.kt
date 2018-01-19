@@ -42,7 +42,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   @BindView(R.id.fragment_characters_more_loading)
   lateinit var smallBottomProgressBar: ProgressBar
 
-  private lateinit var searchView: SearchView
+  private var searchView: SearchView? = null
   private lateinit var searchPublisher: PublishSubject<String>
   private lateinit var searchItemIdPublisher: PublishSubject<Int>
 
@@ -90,8 +90,10 @@ class CharactersFragment : Fragment(), CharactersContract.View {
   }
 
   override fun onDestroyView() {
-    searchView.setOnSuggestionListener(null)
-    searchView.setOnQueryTextListener(null)
+    searchView?.setOnSuggestionListener(null)
+    searchView?.setOnQueryTextListener(null)
+    mainCenteredProgressBar.animate().cancel()
+    smallBottomProgressBar.animate().cancel()
     viewUnBinder.unbind()
     super.onDestroyView()
   }
@@ -127,17 +129,17 @@ class CharactersFragment : Fragment(), CharactersContract.View {
     inflater?.inflate(R.menu.menu_search, menu)
     val item = menu?.findItem(R.id.menu_item_search)
     searchView = item?.actionView as SearchView
-    searchView.suggestionsAdapter = searchSuggestionsAdapter
-    searchView.layoutAnimation = AnimationUtils.loadLayoutAnimation(context,
+    searchView?.suggestionsAdapter = searchSuggestionsAdapter
+    searchView?.layoutAnimation = AnimationUtils.loadLayoutAnimation(context,
         R.anim.list_animation_item_enter_from_top)
 
     // hack to show search suggestions with 1 character.
-    val searchAutoCompleteTextView = searchView.findViewById(
+    val searchAutoCompleteTextView = searchView?.findViewById(
         R.id.search_src_text) as AutoCompleteTextView
     searchAutoCompleteTextView.threshold = 1
 
     // RxSearchView bindings don't suffice
-    searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+    searchView?.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
       override fun onSuggestionSelect(position: Int): Boolean = false
 
       override fun onSuggestionClick(position: Int): Boolean {
@@ -146,7 +148,7 @@ class CharactersFragment : Fragment(), CharactersContract.View {
       }
     })
 
-    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean = false
 
       override fun onQueryTextChange(newText: String?): Boolean {

@@ -34,7 +34,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:layout_centerInParent="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/fragment_comic_book_cover_bottom_padding"
       app:layoutManager="android.support.v7.widget.LinearLayoutManager"
       tools:listitem="@layout/list_item_comic_book_big"
       />
