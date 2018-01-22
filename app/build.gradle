@@ -34,7 +34,8 @@ android {
   buildTypes.each {
     it.buildConfigField "String", "MARVEL_API_URL", marvelAppProperties['marvelApiUrl']
     it.buildConfigField "String", "MARVEL_API_PUBLIC_KEY", marvelAppProperties['marvelApiPublicKey']
-    it.buildConfigField "String", "MARVEL_API_PRIVATE_KEY", marvelAppProperties['marvelApiPrivateKey']
+    it.buildConfigField "String", "MARVEL_API_PRIVATE_KEY",
+        marvelAppProperties['marvelApiPrivateKey']
   }
 
   buildTypes {
@@ -113,7 +114,7 @@ dependencies {
   implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
   implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
   // image loading
-  implementation ('com.github.bumptech.glide:glide:4.5.0') {
+  implementation('com.github.bumptech.glide:glide:4.5.0') {
     exclude group: "com.android.support"
   }
   kapt 'com.github.bumptech.glide:compiler:4.5.0'
