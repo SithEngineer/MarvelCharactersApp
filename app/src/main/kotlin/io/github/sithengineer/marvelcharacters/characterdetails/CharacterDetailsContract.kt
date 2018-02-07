@@ -2,7 +2,7 @@ package io.github.sithengineer.marvelcharacters.characterdetails
 
 import io.github.sithengineer.marvelcharacters.BasePresenter
 import io.github.sithengineer.marvelcharacters.BaseView
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType
 import io.reactivex.Observable

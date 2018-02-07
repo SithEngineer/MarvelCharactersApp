@@ -1,6 +1,6 @@
 package io.github.sithengineer.marvelcharacters.data.source.remote
 
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.github.sithengineer.marvelcharacters.util.HashUtils
 import io.reactivex.Single

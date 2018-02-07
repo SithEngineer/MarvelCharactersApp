@@ -2,7 +2,7 @@ package io.github.sithengineer.marvelcharacters.characters
 
 import io.github.sithengineer.marvelcharacters.BasePresenter
 import io.github.sithengineer.marvelcharacters.BaseView
-import io.github.sithengineer.marvelcharacters.data.model.Character
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
 import io.reactivex.Observable
 
 interface CharactersContract {

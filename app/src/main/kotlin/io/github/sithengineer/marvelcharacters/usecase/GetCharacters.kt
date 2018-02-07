@@ -2,7 +2,7 @@ package io.github.sithengineer.marvelcharacters.usecase
 
 import io.github.sithengineer.marvelcharacters.UseCase
 import io.github.sithengineer.marvelcharacters.usecase.filter.CharacterFilter
-import io.github.sithengineer.marvelcharacters.data.model.Character
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.reactivex.Single
 

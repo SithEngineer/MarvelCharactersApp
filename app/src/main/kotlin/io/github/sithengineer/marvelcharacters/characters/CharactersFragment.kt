@@ -17,8 +17,8 @@ import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
 import io.github.sithengineer.marvelcharacters.adapter.CharacterSearchCursorAdapter
 import io.github.sithengineer.marvelcharacters.adapter.CharactersAdapter
-import io.github.sithengineer.marvelcharacters.data.model.Character
-import io.github.sithengineer.marvelcharacters.data.model.Image
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Image
 import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters
 import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter

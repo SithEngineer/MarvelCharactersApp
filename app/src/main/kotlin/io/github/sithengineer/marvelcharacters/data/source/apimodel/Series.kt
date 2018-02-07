@@ -1,6 +1,6 @@
-package io.github.sithengineer.marvelcharacters.data.model
+package io.github.sithengineer.marvelcharacters.data.source.apimodel
 
-data class Comic(
+data class Series(
     val id: Int,
     val title: String,
     val description: String,

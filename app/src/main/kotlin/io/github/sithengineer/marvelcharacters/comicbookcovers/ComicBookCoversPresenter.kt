@@ -1,6 +1,6 @@
 package io.github.sithengineer.marvelcharacters.comicbookcovers
 
-import io.github.sithengineer.marvelcharacters.data.model.Image
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Image
 import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
 import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType

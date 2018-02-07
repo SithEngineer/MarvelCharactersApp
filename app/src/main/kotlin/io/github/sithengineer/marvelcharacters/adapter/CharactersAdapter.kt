@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jakewharton.rxbinding2.view.RxView
 import io.github.sithengineer.marvelcharacters.R
-import io.github.sithengineer.marvelcharacters.data.model.Character
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 

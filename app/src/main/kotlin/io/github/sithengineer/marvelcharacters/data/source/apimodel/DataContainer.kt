@@ -1,4 +1,4 @@
-package io.github.sithengineer.marvelcharacters.data.model
+package io.github.sithengineer.marvelcharacters.data.source.apimodel
 
 data class DataContainer<T>(
     val offset: Int?,

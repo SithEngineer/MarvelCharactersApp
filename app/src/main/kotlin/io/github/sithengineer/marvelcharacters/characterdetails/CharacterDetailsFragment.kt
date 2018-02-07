@@ -21,7 +21,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import io.github.sithengineer.marvelcharacters.MarvelCharactersApplication
 import io.github.sithengineer.marvelcharacters.R
 import io.github.sithengineer.marvelcharacters.adapter.SmallComicBookAdapter
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
 import io.github.sithengineer.marvelcharacters.util.DisplayUtils
 import io.github.sithengineer.marvelcharacters.util.MarvelImageView

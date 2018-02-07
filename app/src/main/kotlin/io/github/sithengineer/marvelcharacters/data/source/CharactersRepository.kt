@@ -1,6 +1,6 @@
 package io.github.sithengineer.marvelcharacters.data.source
 
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.reactivex.Single
 
 //class CharactersRepository private constructor(

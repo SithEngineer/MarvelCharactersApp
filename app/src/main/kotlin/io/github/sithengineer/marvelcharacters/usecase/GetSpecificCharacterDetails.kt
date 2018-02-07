@@ -1,7 +1,7 @@
 package io.github.sithengineer.marvelcharacters.usecase
 
 import io.github.sithengineer.marvelcharacters.UseCase
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.reactivex.Single
 

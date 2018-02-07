@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.github.sithengineer.marvelcharacters.DummyData
-import io.github.sithengineer.marvelcharacters.data.model.Character
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
 import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters

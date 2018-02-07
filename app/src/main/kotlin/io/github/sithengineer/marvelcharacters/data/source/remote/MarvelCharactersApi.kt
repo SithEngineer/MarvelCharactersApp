@@ -1,6 +1,6 @@
 package io.github.sithengineer.marvelcharacters.data.source.remote
 
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

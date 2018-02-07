@@ -3,7 +3,7 @@ package io.github.sithengineer.marvelcharacters
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
-import io.github.sithengineer.marvelcharacters.data.model.*
+import io.github.sithengineer.marvelcharacters.data.source.apimodel.*
 import io.github.sithengineer.marvelcharacters.data.source.CharactersDataSource
 import io.reactivex.rxkotlin.toSingle
 import java.time.Instant
