@@ -1,6 +1,7 @@
 # Marvel Characters Android
 
-This will be the readme file for this Android Application
+Just an example application to list, search and view the details of Marvel characters, written in Kotlin. 
+This application has Use Cases to help separating the Presentation layer and the Domain layer, without using any dependency injection framework but having most of the architecture ready for it, hence all entity dependencies are passed (injected?) by constructor parameters.
 
 # How can I compile this app?
 
@@ -17,4 +18,21 @@ debugCacheSize=1000000
 releaseCacheSize=10000000
 ```
 
-This will be your configuration for the app regarding the Marvel API base url, your public API key and your private API key. This two keys are needed to do requests to the Marvel API. The cache size configurations will help you to setup the cache size for the API responses in your device. 
+This will be your configuration for the app regarding the Marvel API base URL, your public API key and your private API key. This two keys are needed to do requests to the Marvel API. The cache size configurations will help you to setup the cache size for the API responses in your device. 
+
+# Technologies used
+
+ * Kotlin
+ * RxJava
+ * Retrofit
+ * OkHttp
+ * Gson
+ * Glide
+ * ButterKnife
+ * Timber
+ * Stetho
+ * Spek
+ * Junit
+ * Mockito
+ * PaperParcel
+
