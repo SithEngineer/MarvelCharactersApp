@@ -16,19 +16,19 @@
       android:fullBackupContent="false"
       android:hardwareAccelerated="true"
       >
-    <activity android:name=".characters.CharactersActivity">
+    <activity android:name=".presentation.characters.CharactersActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
     <activity
-        android:name=".characterdetails.CharacterDetailsActivity"
-        android:parentActivityName=".characters.CharactersActivity"
+        android:name=".presentation.characterdetails.CharacterDetailsActivity"
+        android:parentActivityName=".presentation.characters.CharactersActivity"
         />
     <activity
-        android:name=".comicbookcovers.ComicBookCoversActivity"
-        android:parentActivityName=".characterdetails.CharacterDetailsActivity"
+        android:name=".presentation.comicbookcovers.ComicBookCoversActivity"
+        android:parentActivityName=".presentation.characterdetails.CharacterDetailsActivity"
         />
   </application>
 

@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     >
 
-  <ImageView
+  <com.facebook.drawee.view.SimpleDraweeView
       android:id="@+id/list_item_search_result_character_image"
       android:layout_width="80dp"
       android:layout_height="80dp"

@@ -1,7 +1,7 @@
 package io.github.sithengineer.marvelcharacters
 
 import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class ExampleUnitTest {
   private val x = 2

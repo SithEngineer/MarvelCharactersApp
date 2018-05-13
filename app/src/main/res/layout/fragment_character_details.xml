@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.sithengineer.marvelcharacters.characterdetails.CharacterDetailsFragment"
+    tools:context="io.github.sithengineer.marvelcharacters.presentation.characterdetails.CharacterDetailsFragment"
     >
   <LinearLayout
       android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:layout_height="300dp"
         >
 
-      <io.github.sithengineer.marvelcharacters.util.MarvelImageView
+      <io.github.sithengineer.marvelcharacters.presentation.MarvelImageView
           android:id="@+id/fragment_character_details_header_image"
           android:layout_width="match_parent"
           android:layout_height="match_parent"

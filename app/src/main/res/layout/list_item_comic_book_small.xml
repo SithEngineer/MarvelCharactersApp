@@ -7,7 +7,7 @@
     tools:layout_marginEnd="8dp"
     >
 
-  <ImageView
+  <com.facebook.drawee.view.SimpleDraweeView
       android:id="@+id/list_item_book_image"
       android:layout_width="match_parent"
       android:layout_height="@dimen/list_item_book_small_image_height"

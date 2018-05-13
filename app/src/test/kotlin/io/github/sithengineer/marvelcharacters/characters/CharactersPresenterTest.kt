@@ -7,6 +7,8 @@ import com.nhaarman.mockito_kotlin.verify
 import io.github.sithengineer.marvelcharacters.DummyData
 import io.github.sithengineer.marvelcharacters.data.source.apimodel.Character
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
+import io.github.sithengineer.marvelcharacters.presentation.characters.CharactersContract
+import io.github.sithengineer.marvelcharacters.presentation.characters.CharactersPresenter
 import io.github.sithengineer.marvelcharacters.usecase.GetCharacters
 import io.github.sithengineer.marvelcharacters.usecase.SearchCharacters
 import io.github.sithengineer.marvelcharacters.usecase.filter.EmptyFilter
@@ -43,7 +45,8 @@ class CharactersPresenterTest : Spek({
     val searchCharacters = SearchCharacters(
         charactersRepository, LimitFilter(maximumSearchResults)
     )
-    val charactersPresenter = CharactersPresenter(view, getCharactersUseCase, searchCharacters,
+    val charactersPresenter = CharactersPresenter(
+        view, getCharactersUseCase, searchCharacters,
         Schedulers.trampoline(), Schedulers.trampoline())
 
     on("characters view created") {

@@ -3,8 +3,10 @@ package io.github.sithengineer.marvelcharacters.comicbookcovers
 import com.nhaarman.mockito_kotlin.*
 import io.github.sithengineer.marvelcharacters.DummyData
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
+import io.github.sithengineer.marvelcharacters.presentation.comicbookcovers.ComicBookCoversContract
+import io.github.sithengineer.marvelcharacters.presentation.comicbookcovers.ComicBookCoversPresenter
 import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
-import io.github.sithengineer.marvelcharacters.viewmodel.ComicBookType
+import io.github.sithengineer.marvelcharacters.presentation.viewmodel.ComicBookType
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.spek.api.Spek
@@ -27,7 +29,8 @@ class ComicBookCoversPresenterTest : Spek({
     val charactersRepository = CharactersRepository(charactersRemoteDataSource)
 
     val getCharactersUseCase = GetSpecificCharacterDetails(charactersRepository)
-    val charactersPresenter = ComicBookCoversPresenter(view, getCharactersUseCase,
+    val charactersPresenter = ComicBookCoversPresenter(
+        view, getCharactersUseCase,
         Schedulers.trampoline(), Schedulers.trampoline(), characterId, comicBookType)
 
     on("comic book covers view created") {

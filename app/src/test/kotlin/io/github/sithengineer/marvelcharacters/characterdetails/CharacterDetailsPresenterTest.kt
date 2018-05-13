@@ -6,8 +6,10 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.github.sithengineer.marvelcharacters.DummyData
 import io.github.sithengineer.marvelcharacters.data.source.CharactersRepository
+import io.github.sithengineer.marvelcharacters.presentation.characterdetails.CharacterDetailsContract
+import io.github.sithengineer.marvelcharacters.presentation.characterdetails.CharacterDetailsPresenter
 import io.github.sithengineer.marvelcharacters.usecase.GetSpecificCharacterDetails
-import io.github.sithengineer.marvelcharacters.viewmodel.ComicBook
+import io.github.sithengineer.marvelcharacters.presentation.viewmodel.ComicBook
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.spek.api.Spek
@@ -42,7 +44,8 @@ class CharacterDetailsPresenterTest : Spek({
     val charactersRepository = CharactersRepository(charactersRemoteDataSource)
 
     val getCharactersUseCase = GetSpecificCharacterDetails(charactersRepository)
-    val charactersPresenter = CharacterDetailsPresenter(view, getCharactersUseCase,
+    val charactersPresenter = CharacterDetailsPresenter(
+        view, getCharactersUseCase,
         Schedulers.trampoline(), Schedulers.trampoline(), characterId)
 
     on("character details view created") {

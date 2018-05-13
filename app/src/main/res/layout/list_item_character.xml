@@ -5,7 +5,7 @@
     android:layout_height="@dimen/list_item_character_max_height"
     >
 
-  <ImageView
+  <com.facebook.drawee.view.SimpleDraweeView
       android:id="@+id/list_item_character_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

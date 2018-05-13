@@ -1,15 +1,17 @@
 <resources>
 
-  <style name="AppTheme" parent="Base.AppTheme" />
-
-  <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme" />
 
   <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:textColor">@color/white</item>
+    <item name="android:background">@color/colorPrimary</item>
   </style>
+
+  <style name="AppTheme" parent="Base.AppTheme"/>
+
+  <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme"/>
 
   <style name="Title" parent="AppTheme">
     <item name="android:textColor">@color/colorAccent</item>
@@ -24,6 +26,6 @@
     <item name="android:shadowRadius">6</item>
   </style>
 
-  <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+  <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </resources>
